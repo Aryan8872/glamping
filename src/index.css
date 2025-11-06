@@ -13,3 +13,13 @@ body {
 @theme{
   --color-primary-black:#0a0f12
 }
+.page-padding{
+    padding-left:20px;
+    padding-right:20px;
+}
+@media (min-width:640px) {
+  .page-padding{
+    padding-left:40px;
+    padding-right:40px;
+  }
+}

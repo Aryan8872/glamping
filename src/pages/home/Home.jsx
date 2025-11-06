@@ -19,7 +19,7 @@ const stagger = (delay = 0.1) => ({
 export default function Home() {
 
   return (
-    <>
+    <div>
       {/* Hero */}
       <Hero/>
 
@@ -46,6 +46,6 @@ export default function Home() {
           </motion.form>
         </motion.div>
       </section>
-    </>
+    </div>
   )
 }
