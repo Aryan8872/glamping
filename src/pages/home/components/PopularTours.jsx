@@ -12,14 +12,14 @@ const PopularTours = () => {
     }
 
     const tours = [
-        'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1887&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1500530855697-3a73f1bc3af7?q=80&w=1887&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1932&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1887&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=75&w=1200&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1500530855697-3a73f1bc3af7?q=75&w=1200&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=75&w=1200&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=75&w=1200&auto=format&fit=crop',
     ]
     return (
-        <Parallax bgImage='/images/tours_bg.jpg' strength={500}>
-            <section id="tours" className="relative min-h-[60vh]  py-20">
+        <Parallax bgImage='/images/tours_bg.jpg' strength={150} bgImageStyle={{ willChange: 'transform' }}>
+            <section id="tours" className="relative min-h-[60vh]  py-20" style={{ contentVisibility: 'auto', containIntrinsicSize: '800px' }}>
                 <div className="mx-auto w-[92%] max-w-[1200px]">
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-8 text-center" variants={stagger(0.1)}>
                         <motion.div variants={fadeInUp} className=" text-3xl font-bold uppercase tracking-[.3em] text-black">Popular Tours</motion.div>
@@ -36,9 +36,18 @@ const PopularTours = () => {
                                     boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
                                     transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
                                 }}
-                                className="group relative  min-h-[280px] overflow-hidden rounded-2xl border border-white/10 bg-[#11171b] cursor-pointer"
+                                className="group relative  min-h-[280px] overflow-hidden rounded-2xl border border-white/10 bg-[#11171b] cursor-pointer transform-gpu"
+                                style={{ willChange: 'transform' }}
                             >
-                                <img className="h-full w-full object-cover brightness-90" src={src} alt={`Tour ${i + 1}`} />
+                                <img
+                                    className="h-full w-full object-cover brightness-90"
+                                    src={src}
+                                    alt={`Tour ${i + 1}`}
+                                    loading="lazy"
+                                    decoding="async"
+                                    fetchPriority="low"
+                                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                                />
                                 <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-[#060a0c]/90" />
                                 <div className="absolute inset-x-4 bottom-11 z-10 flex-col text-center">
                                     <div className='group/tour-title'>

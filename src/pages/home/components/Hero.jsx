@@ -19,12 +19,12 @@ const Hero = () => {
                     <div className="grid grid-cols-1  gap-12 lg:grid-cols-[1.1fr_.6fr]">
                         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-100px' }} variants={stagger(0.2)}>
                             <motion.h1 variants={fadeInUp} className="text-[clamp(2.4rem,5vw,4.2rem)] font-extrabold uppercase leading-tight text-black">
-                                Time to travel
+                                glampinghimalays
                             </motion.h1>
                             <motion.p variants={fadeInUp} className="mt-4 max-w-[58ch] text-black">
-                                You can visit Rocky Mountain National Park in Estes Park to experience the alpine beauty and hidden lakes. Or soar over the
-                                Caribbean, the Crown Jewel of North America. Long Peak is the 40th tallest mountain in the West.
+                                Luxury under Himalayan skies — serene pine, glacier air, and crafted comfort where the mountains meet your tent.
                             </motion.p>
+
                             <motion.div variants={stagger(0.2)} className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
                                 {[
                                     ['Experienced Guides', 'High safety standards'],
@@ -33,7 +33,8 @@ const Hero = () => {
                                     ['24/7 Support', 'We’re always here'],
                                 ].map(([t, s], i) => (
                                     <motion.div key={i} variants={fadeInUp} whileHover={{ y: -3 }} className="flex items-start gap-3 rounded-xl border shadow-lg border-white/10 bg-white/5 p-4">
-                                        <span className="mt-1 h-2 w-2 rounded-full bg-[#3de0d5]" />
+                                        <span className="mt-1 h-2 w-2 rounded-full bg-(--accent)" />
+
                                         <div>
                                             <h4 className="m-0 text-[0.95rem] text-black font-semibold">{t}</h4>
                                             <p className="m-0 mt-1 text-sm text-black">{s}</p>
@@ -49,7 +50,7 @@ const Hero = () => {
                                     className={
                                         'relative font-bold ' +
                                         (i === 2
-                                            ? 'text-white after:absolute after:-right-3 after:top-1/2 after:h-1.5 after:w-1.5 after:-translate-y-1/2 after:rounded-full after:bg-[#3de0d5] after:shadow-[0_0_0_6px_rgba(61,224,213,.16)]'
+                                            ? 'text-white after:absolute after:-right-3 after:top-1/2 after:h-1.5 after:w-1.5 after:-translate-y-1/2 after:rounded-full after:bg-(--accent) after:shadow-[0_0_0_6px_rgba(47,115,101,.16)]'
                                             : 'text-[#5e767e] opacity-60')
                                     }
                                     initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}

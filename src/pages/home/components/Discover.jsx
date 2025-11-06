@@ -23,15 +23,15 @@ const Discover = () => {
 
     function BadgePlay() {
         return (
-            <motion.span whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }} className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur px-3 py-2 text-sm text-white/90 shadow-[0_8px_24px_rgba(61,224,213,.18)]">
-                <span className="mr-2 inline-block h-0 w-0 border-y-6 border-l-8 border-y-transparent border-l-[#3de0d5]" />
+            <motion.span whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }} className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur px-3 py-2 text-sm text-white/90 shadow-[0_8px_24px_rgba(47,115,101,.18)]">
+                <span className="mr-2 inline-block h-0 w-0 border-y-6 border-l-8 border-y-transparent border-l-(--accent)" />
                 Watch the video
             </motion.span>
         )
     }
     return (
-        <Parallax bgImage='/images/third.jpg' strength={500}>
-            <section className="relative py-20 min-h-[90vh]">
+        <Parallax bgImage='/images/third.jpg' strength={150} bgImageStyle={{ willChange: 'transform' }}>
+            <section className="relative py-20 min-h-[90vh]" style={{ contentVisibility: 'auto', containIntrinsicSize: '900px' }}>
                 <div className="mx-auto grid w-[92%] max-w-[1200px] items-center gap-8 lg:grid-cols-[1.1fr_.9fr]">
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger(0.15)}>
                         <motion.div variants={fadeInUp} className="text-[.8rem] font-bold uppercase tracking-[.3em] text-white">Discover</motion.div>
@@ -47,13 +47,21 @@ const Discover = () => {
                         </motion.div>
                     </motion.div>
 
-                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger(0.08)} className="grid grid-cols-3 gap-4">
+                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-100px' }} variants={stagger(0.08)} className="grid grid-cols-3 gap-4">
                         {thumbs.map((src, i) => (
-                            <motion.div key={i} variants={fadeInUp} whileHover={{ scale: 1.02 }} className="group relative aspect-16/10 overflow-hidden rounded-xl bg-black">
-                                <img className="h-full w-full object-cover opacity-90 transition duration-300 group-hover:brightness-110" src={src} alt="Video thumbnail" />
+                            <motion.div key={i} variants={fadeInUp} whileHover={{ scale: 1.02 }} className="group relative aspect-16/10 overflow-hidden rounded-xl bg-black transform-gpu" style={{ willChange: 'transform' }}>
+                                <img
+                                    className="h-full w-full object-cover opacity-90 transition duration-300 group-hover:brightness-110"
+                                    src={src}
+                                    alt="Video thumbnail"
+                                    loading="lazy"
+                                    decoding="async"
+                                    fetchPriority="low"
+                                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                                />
                                 <div className="absolute inset-0 bg-linear-to-b from-transparent to-black/60" />
                                 <span className="absolute bottom-2 left-2 inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-3 py-2 text-sm backdrop-blur">
-                                    <span className="h-0 w-0 border-y-6 border-l-8 border-y-transparent border-l-[#3de0d5]" />
+                                    <span className="h-0 w-0 border-y-6 border-l-8 border-y-transparent border-l-(--accent)" />
                                 </span>
                             </motion.div>
                         ))}
