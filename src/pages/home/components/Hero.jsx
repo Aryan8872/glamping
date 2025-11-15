@@ -1,69 +1,132 @@
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { Parallax } from "react-parallax"
+import { useState } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Thumbs, Controller, Autoplay, FreeMode, Parallax, Pagination } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/thumbs'
+import 'swiper/css/controller'
+import 'swiper/css/parallax'
+import 'swiper/css/pagination'
 
-const Hero = () => {
-    const stagger = (delay = 0.1) => ({
-        hidden: {},
-        visible: { transition: { staggerChildren: 0.1, delayChildren: delay } },
-    })
-    const fadeInUp = {
-        hidden: { opacity: 0, y: 24 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-    }
-    return (
-        <Parallax bgImage='/images/hero_bg.jpg' strength={800}>
-            <section className={`relative grid min-h-screen items-end `}>
-                {/* <motion.div className="absolute inset-0 -z-10 bg-[radial-gradient(1200px_600px_at_15%_35%,rgba(61,224,213,.18),transparent_50%),linear-gradient(180deg,rgba(10,15,18,.6)_0%,rgba(10,15,18,.85)_60%,#0a0f12_100%)]" /> */}
+const slides = [
+  {
+    title: 'Shaun Matthews',
+    caption:
+      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    img:
+      'https://images.unsplash.com/photo-1483985988355-763728e1935b?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MDE1NTg2Ng&ixlib=rb-1.2.1&q=85',
+  },
+  {
+    title: 'Alexis Berry',
+    caption:
+      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    img:
+      'https://images.unsplash.com/photo-1500643752441-4dc90cda350a?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MDE1NTg2Ng&ixlib=rb-1.2.1&q=85',
+  },
+  {
+    title: 'Billie Pierce',
+    caption:
+      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    img:
+      'https://images.unsplash.com/photo-1465408953385-7c4627c29435?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MDE1NTg2Ng&ixlib=rb-1.2.1&q=85',
+  },
+  {
+    title: 'Trevor Copeland',
+    caption:
+      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    img:
+      'https://images.unsplash.com/photo-1538329972958-465d6d2144ed?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MDE1NTkzNg&ixlib=rb-1.2.1&q=85',
+  },
+  {
+    title: 'Bernadette Newman',
+    caption:
+      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    img:
+      'https://images.unsplash.com/photo-1583292650898-7d22cd27ca6f?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MDE1NTk1OQ&ixlib=rb-1.2.1&q=85',
+  },
+]
 
-                <div className="absolute top-0  translate-x-1/2 right-1/2 w-[92%] max-w-[1200px] pb-[8vh] pt-[20vh] sm:pt-[32vh]">
-                    <div className="grid grid-cols-1  gap-12 lg:grid-cols-[1.1fr_.6fr]">
-                        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-100px' }} variants={stagger(0.2)}>
-                            <motion.h1 variants={fadeInUp} className="text-[clamp(2.4rem,5vw,4.2rem)] font-extrabold uppercase leading-tight text-black">
-                                glampinghimalays
-                            </motion.h1>
-                            <motion.p variants={fadeInUp} className="mt-4 max-w-[58ch] text-black">
-                                Luxury under Himalayan skies — serene pine, glacier air, and crafted comfort where the mountains meet your tent.
-                            </motion.p>
+export default function Hero() {
+  const [thumbs, setThumbs] = useState(null)
+  const [main, setMain] = useState(null)
 
-                            <motion.div variants={stagger(0.2)} className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                                {[
-                                    ['Experienced Guides', 'High safety standards'],
-                                    ['Small Groups', 'Intimate experiences'],
-                                    ['Flexible Dates', 'Plan your time'],
-                                    ['24/7 Support', 'We’re always here'],
-                                ].map(([t, s], i) => (
-                                    <motion.div key={i} variants={fadeInUp} whileHover={{ y: -3 }} className="flex items-start gap-3 rounded-xl border shadow-lg border-white/10 bg-white/5 p-4">
-                                        <span className="mt-1 h-2 w-2 rounded-full bg-(--accent)" />
-
-                                        <div>
-                                            <h4 className="m-0 text-[0.95rem] text-black font-semibold">{t}</h4>
-                                            <p className="m-0 mt-1 text-sm text-black">{s}</p>
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </motion.div>
-                        </motion.div>
-                        <div className="flex flex-col items-end gap-2 pr-1 lg:items-end">
-                            {['01', '02', '03'].map((n, i) => (
-                                <motion.div
-                                    key={n}
-                                    className={
-                                        'relative font-bold ' +
-                                        (i === 2
-                                            ? 'text-white after:absolute after:-right-3 after:top-1/2 after:h-1.5 after:w-1.5 after:-translate-y-1/2 after:rounded-full after:bg-(--accent) after:shadow-[0_0_0_6px_rgba(47,115,101,.16)]'
-                                            : 'text-[#5e767e] opacity-60')
-                                    }
-                                    initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                                >
-                                    {n}
-                                </motion.div>
-                            ))}
-                        </div>
+  return (
+    <section className="relative min-h-screen w-full overflow-hidden bg-black">
+      <div className="mx-auto grid w-[92%] max-w-[1400px] gap-3 md:grid-cols-[1fr_280px] lg:grid-cols-[1fr_320px] py-4 md:py-10">
+        <div className="relative h-[70vh] md:h-[80vh] lg:h-[88vh] rounded-2xl overflow-hidden ring-1 ring-white/10">
+          <Swiper
+            modules={[Navigation, Thumbs, Controller, Autoplay, FreeMode, Parallax, Pagination]}
+            onSwiper={setMain}
+            speed={1000}
+            loop={false}
+            slidesPerView={1}
+            centeredSlides={false}
+            spaceBetween={0}
+            resistanceRatio={0}
+            autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+            parallax={true}
+            rewind={true}
+            navigation={true}
+            pagination={{ clickable: true, dynamicBullets: true }}
+            thumbs={{ swiper: thumbs && !thumbs.destroyed ? thumbs : null }}
+            className="h-full"
+          >
+            {slides.map((s, i) => (
+              <SwiperSlide key={i} className="relative">
+                <div
+                  className="absolute inset-0 bg-center bg-cover"
+                  style={{ backgroundImage: `url(${s.img})` }}
+                  data-swiper-parallax="-20%"
+                />
+                <div className="absolute inset-0 bg-black/40" data-swiper-parallax="-10%" />
+                <div className="relative z-10 flex h-full items-center">
+                  <div className="hero-content w-[90%] max-w-[820px] px-6 sm:px-10">
+                    <p className="text-3xl sm:text-5xl font-extrabold text-white drop-shadow" data-swiper-parallax="30%" data-swiper-parallax-opacity="0">{s.title}</p>
+                    <span
+                      className="mt-3 block max-w-[60ch] text-white/90 bg-black/20 rounded-lg backdrop-blur-sm px-3 py-2"
+                      data-swiper-parallax="40%" data-swiper-parallax-opacity="0"
+                    >
+                      {s.caption}
+                    </span>
+                    <div className="mt-6" data-swiper-parallax="50%" data-swiper-parallax-opacity="0">
+                      <a href="#tours" className="inline-flex items-center rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-[#062a27] hover:bg-emerald-600">Explore stays</a>
                     </div>
+                  </div>
                 </div>
-            </section>
-        </Parallax>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
 
-    )
+        <div className="hidden md:block h-[70vh] md:h-[80vh] lg:h-[88vh]">
+          <Swiper
+            modules={[Navigation, Thumbs, Controller]}
+            onSwiper={setThumbs}
+            direction="vertical"
+            slidesPerView={5}
+            spaceBetween={8}
+            centeredSlides={true}
+            loop={false}
+            watchSlidesProgress={true}
+            slideToClickedSlide={true}
+            className="h-full rounded-2xl overflow-hidden"
+            onClick={() => { try { main?.autoplay?.start() } catch(e){} }}
+          >
+            {slides.map((s, i) => (
+              <SwiperSlide key={i} className="relative cursor-pointer">
+                <div
+                  className="absolute inset-0 bg-center bg-cover"
+                  style={{ backgroundImage: `url(${s.img})` }}
+                />
+                <div className="absolute inset-0 bg-black/35" />
+                <div className="relative z-10 flex h-full items-end p-3">
+                  <p className="text-white/90 text-sm font-semibold drop-shadow">{s.title}</p>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </div>
+    </section>
+  )
 }
-export default Hero

@@ -55,7 +55,7 @@ export default function Gallery() {
               {/* Text Container */}
               <div
                 transition={{ duration: 0.5, ease: 'easeOut' }}
-                className="absolute bottom-0 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all ease-out duration-500  w-full px-4 pb-6 text-center text-white"
+                className="absolute bottom-0 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all ease-out duration-500    w-full px-4 pb-6 text-center text-white"
               >
                 <h3 className="text-lg font-bold uppercase tracking-wide mb-2">
                   {gallery.title}

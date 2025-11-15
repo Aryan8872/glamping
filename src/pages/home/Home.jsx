@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion'
 import Hero from './components/Hero'
+import HeroSearch from './components/HeroSearch'
 import PopularTours from './components/PopularTours'
-import Discover from './components/Discover'
-import Services from './components/Services'
-import Stats from './components/Stats'
+import Story from './components/Story'
+import GiftCard from './components/GiftCard'
+import Steps from './components/Steps'
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
@@ -23,17 +24,20 @@ export default function Home() {
       {/* Hero */}
       <Hero/>
 
-      {/* Popular Tours */}
+      {/* Hero Search */}
+      <HeroSearch/>
+
+      {/* Popular tours (replaces Handpicked adventures) */}
       <PopularTours/>
 
-      {/* Discover */}
-      <Discover/>
+      {/* Story / feature section */}
+      <Story/>
 
-      {/* Services */}
-      <Services/>
+      {/* Gift card banner */}
+      <GiftCard/>
 
-      {/* Stats */}
-      <Stats/>
+      {/* Three steps */}
+      <Steps/>
 
       {/* Newsletter */}
       <section id="contact" className="bg-[#0e1418] py-20">
