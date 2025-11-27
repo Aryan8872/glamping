@@ -40,7 +40,7 @@ export async function httpGet(path: string, opts?: { headers?: Record<string, st
       if (attempt > maxRetries) break;
       await delay(200 * attempt);
     }
-  }
+  }   
   if (lastErr && typeof lastErr === "object" && "status" in lastErr) throw lastErr as HttpError;
   throw { status: 0, message: lastErr?.message || "Network error" } satisfies HttpError;
 }
