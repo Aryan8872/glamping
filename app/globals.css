@@ -7,10 +7,14 @@
 
 @theme inline {
   --color-primary-blue:#137FEC;
-  --color-primary-bg:#F6F7F8;
+  --color-primary-bg:#FAFAFA;
   --color-dark-green:#122B24;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary-green:#007A55;
+  --color-secondary-green:#CCE5E3;
+  --color-main-heading-green: #007966;
+  --color-sub-heading-green: #2F7267;
   --font-sans: var(--font-geist-sans);
   --font-inter:var(--font-inter);
   --font-mono: var(--font-geist-mono);

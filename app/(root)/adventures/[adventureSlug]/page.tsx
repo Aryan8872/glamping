@@ -1,6 +1,6 @@
 import React from "react";
 import { FiMessageCircle } from "react-icons/fi";
-import Card from "../../components/Card";
+import Card from "../../../../features/camp/ui/Card";
 
 const page = async ({
   params,

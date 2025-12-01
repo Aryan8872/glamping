@@ -18,9 +18,11 @@ function delay(ms: number) {
 // 🔵 INTERNAL: Build full URL
 // -------------------------------
 function buildUrl(path: string) {
-    return path.startsWith("http")
+    const url = path.startsWith("http")
         ? path
         : `${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}/${path}`;
+    console.log(url)
+    return url
 }
 
 // -------------------------------

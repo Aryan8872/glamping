@@ -39,7 +39,7 @@ const GalleryGrid = ({ galleryData }: { galleryData: GalleryItem[] }) => {
               className="relative h-full rounded-md"
             >
               <motion.img
-                src={gallery.coverImage}
+                src={`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${gallery.coverImage}`}
                 alt={gallery.title}
                 className="h-full w-full object-cover rounded-md transition-transform duration-700 group-hover:scale-110"
               />

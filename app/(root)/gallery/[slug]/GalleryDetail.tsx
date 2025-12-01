@@ -17,7 +17,7 @@ export default async function GalleryDetail({slug}:{slug:string}){
         <p className="mt-2 text-gray-600">{item.description}</p>
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {item.images.map((src, i) => (
-            <img key={i} src={src} alt={`${item.title}-${i}`} className="w-full h-64 object-cover rounded-xl" />
+            <img key={i} src={`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${src}`} alt={`${item.title}-${i}`} className="w-full h-64 object-cover rounded-xl" />
           ))}
         </div>
       </div>
