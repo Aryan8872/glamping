@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 export default function GiftCard() {
   return (
     <section className="bg-white py-10">
-      <div className="mx-auto w-[92%] max-w-[1200px]">
+      <div className="w-full">
         <div className="relative overflow-hidden rounded-2xl border border-black/10">
           <img src="https://images.unsplash.com/photo-1549144511-f099e773c147?q=80&w=2000&auto=format&fit=crop" alt="gift" className="h-[420px] w-full object-cover" />
           <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent" />

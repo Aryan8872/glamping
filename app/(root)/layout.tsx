@@ -5,7 +5,7 @@ import { Suspense } from "react";
 export default function Layout({ children }: { children: React.ReactElement }) {
   return (
     <>
-      <div className="px-3">
+      <div className="">
         <Suspense
           fallback={
             <div className="h-[72px] bg-white border-b border-gray-200" />
@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactElement }) {
         >
           <NavBar />
         </Suspense>
-        <div className="min-h-screen py-6 ">{children}</div>
+        <div className="min-h-screen py-6 px-9 xl:px-20">{children}</div>
       </div>
       <Footer />
     </>

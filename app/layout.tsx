@@ -33,7 +33,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} font-inter  antialiased w-full bg-primary-bg flex h-full overflow-y-scroll flex-row  `}
       > 
-        <div className="flex flex-col gap-5 w-full h-full  bg-primary-bg">
+        <div className="flex flex-col gap-5 w-full h-full   bg-primary-bg">
           {children}
         </div>
       </body>

@@ -13,7 +13,7 @@ const stagger = (delay = 0.08) => ({
 export default function Story() {
   return (
     <section className="bg-white py-14">
-      <div className="mx-auto w-[92%] max-w-[1200px] grid lg:grid-cols-[1.1fr_.9fr] gap-8 items-center">
+      <div className="w-full grid lg:grid-cols-[1.1fr_.9fr] gap-8 items-center">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger(0.05)}>
           <motion.h3 variants={fadeInUp} className="text-[.9rem] uppercase tracking-[.3em] text-gray-500">Featured</motion.h3>
           <motion.h2 variants={fadeInUp} className="mt-2 text-3xl sm:text-4xl font-extrabold">Join an adventure with Sine Fuglsang at Yggdrasil Igloo</motion.h2>
