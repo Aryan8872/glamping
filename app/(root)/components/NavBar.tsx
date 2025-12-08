@@ -3,13 +3,15 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import FilterBar from "@/features/camp/ui/FilterBar";
-import { IoSearch } from "react-icons/io5";
+import { IoClose,  } from "react-icons/io5";
 import DiscountBanner from "@/features/discount/ui/DiscountBanner";
+import { MdMenu } from "react-icons/md";
 
 export default function NavBar() {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [showNavBar, setShowNavBar] = useState(true);
   const pathname = usePathname();
+  const [showMenu, setShowMenu] = useState(false);
   const isSearchPage = pathname === "/search";
 
   useEffect(() => {
@@ -94,7 +96,32 @@ export default function NavBar() {
             </Link>
           ))}
         </nav>
-     
+
+        <MdMenu className="block md:hidden text-2xl cursor-pointer" onClick={() => setShowMenu(!showMenu)} />
+      </div>
+
+      <div
+        className={`${
+          showMenu ? "translate-y-0" : "-translate-y-full"
+        } md:hidden  flex  items-center justify-center fixed z-[999] inset-0 w-full h-svh bg-white transition-transform duration-300 ease-in-out  `}
+      >
+        <IoClose className="absolute top-5 right-7 text-3xl cursor-pointer" onClick={() => setShowMenu(!showMenu)}/>
+        <nav className="flex flex-col gap-7 text-sm font-semibold">
+          {[
+            { href: "/", label: "Home" },
+            { href: "/about", label: "About Us" },
+            { href: "/gallery", label: "Gallery" },
+            { href: "/contact", label: "Contacts" },
+          ].map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="hover:underline text-2xl text-primary-green underline-offset-4"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </nav>
       </div>
     </header>
   );
