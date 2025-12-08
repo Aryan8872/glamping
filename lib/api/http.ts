@@ -12,6 +12,7 @@ function delay(ms: number) {
 
 export async function httpGet(path: string, opts?: { headers?: Record<string, string>; timeoutMs?: number; retries?: number; cache?: RequestCache; next?: { revalidate?: number; tags?: string[] } }) {
   const url = path.startsWith("http") ? path : `${RESOLVED_API_BASE_URL}${path}`;
+  console.log(`[HTTP] GET Request to: ${url}`);
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), opts?.timeoutMs ?? 10000);
   const maxRetries = Math.min(opts?.retries ?? 1, 3);
@@ -40,7 +41,7 @@ export async function httpGet(path: string, opts?: { headers?: Record<string, st
       if (attempt > maxRetries) break;
       await delay(200 * attempt);
     }
-  }   
+  }
   if (lastErr && typeof lastErr === "object" && "status" in lastErr) throw lastErr as HttpError;
   throw { status: 0, message: lastErr?.message || "Network error" } satisfies HttpError;
 }
