@@ -20,6 +20,10 @@ export interface Camp {
     campHost: CampHost,
     createdAt: string;
     updatedAt: string;
+    discountedPrice?: number;
+    originalPrice?: number;
+    discountPercentage?: number;
+    discountName?: string;
 }
 
 export interface CampResponse {
@@ -29,12 +33,14 @@ export interface CampResponse {
 export interface CampFacility {
     id: number,
     campId: number,
-    facility: {
-        id: number,
-        name: string,
-        icon: string,
-        slug: string,
-    }
+    facility: Facility
+}
+
+export interface Facility {
+    id: number,
+    name: string,
+    icon: string,
+    slug: string,
 }
 
 export interface CampHost {
@@ -53,11 +59,17 @@ export type USER_STATUS = "ENABLED" | "DISABLED"
 
 export interface SearchFilters {
     q?: string;
+    experience?: string;
+    destination?: string;
     minPrice?: number;
     maxPrice?: number;
-    startDate?: string;
-    endDate?: string;
-    features?: string[];
+    checkIn?: string;
+    checkOut?: string;
+    facilityIds?: string[];
+    adults?: number;
+    children?: number;
+    pets?: number;
+    sort?: string;
     page?: number;
     limit?: number;
 }

@@ -3,6 +3,13 @@ import { Camp } from "@/features/camp/types/CampTypes";
 const ADVENTURE_KEY = "adventure"
 
 
+export interface CampSiteAdventure{
+    id: number;
+    campId:number;
+    adventureId:number;
+    campSite:Camp
+}
+
 export interface Adventure {
     id: number;
     name: string;
@@ -15,5 +22,5 @@ export interface Adventure {
     isActive: boolean;
     createdAt: string;
     updatedAt: string;
-    campSites: Camp[];
+    campSites: CampSiteAdventure[];
 }

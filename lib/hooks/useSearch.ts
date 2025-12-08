@@ -17,7 +17,9 @@ export function useCampSearch(initialFilters: SearchFilters = {}) {
     maxPrice: Number(searchParams.get("maxPrice")) || initialFilters.maxPrice,
     checkIn: searchParams.get("checkIn") || initialFilters.checkIn,
     checkOut: searchParams.get("checkOut") || initialFilters.checkOut,
-    facilityIds: searchParams.get("facilityIds") || initialFilters.facilityIds,
+    facilityIds: searchParams.get("facilityIds")
+      ? searchParams.get("facilityIds")!.split(",")
+      : initialFilters.facilityIds,
     adults: Number(searchParams.get("adults")) || initialFilters.adults,
     children: Number(searchParams.get("children")) || initialFilters.children,
     pets: Number(searchParams.get("pets")) || initialFilters.pets,

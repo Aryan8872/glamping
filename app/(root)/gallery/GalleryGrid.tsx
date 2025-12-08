@@ -2,13 +2,18 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { GalleryItem } from "@/types/GalleryTypes";
+
 const gridContainerVariants = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.25, delay: 0.45 } },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.25, delayChildren: 0.45 },
+  },
 };
+
 const gridSquareVariants = {
   hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
 const GalleryGrid = ({ galleryData }: { galleryData: GalleryItem[] }) => {
@@ -18,7 +23,7 @@ const GalleryGrid = ({ galleryData }: { galleryData: GalleryItem[] }) => {
         className="font-bold uppercase tracking-[.3em] text-3xl text-black text-center"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.6 }}
       >
         GALLERY
       </motion.p>

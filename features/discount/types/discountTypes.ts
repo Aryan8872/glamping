@@ -3,6 +3,8 @@ export interface DiscountOffer {
     title: string;
     description: string;
     discountPercentage: number;
+    discountLabel?: string;
+    type?: "PERCENTAGE" | "FIXED";
     expiryDate: string; // ISO string
     code?: string;
     link?: string;

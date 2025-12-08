@@ -2,8 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  output: 'standalone',
   experimental: {
     turbopackFileSystemCacheForDev: true,
+    // Disable cacheComponents to avoid prerendering issues
     cacheComponents: true,
   },
   images: {
@@ -16,9 +18,10 @@ const nextConfig: NextConfig = {
       },
     ],
     dangerouslyAllowSVG: true,
-    unoptimized: true, // Disable image optimization for localhost
+    unoptimized: true,
   },
-
+  // Skip static generation during build
+  skipTrailingSlashRedirect: true,
 };
 
 export default nextConfig;

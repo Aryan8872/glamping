@@ -1,9 +1,10 @@
-
 import GalleryDetail from "./GalleryDetail";
 
-export default async function page({ params }: { params: Promise<{ slug: string }> }) {
-  const {slug} = await params
-  return (
-    <GalleryDetail slug={slug} />
-  )
+export default async function page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  return <GalleryDetail slug={slug} />;
 }

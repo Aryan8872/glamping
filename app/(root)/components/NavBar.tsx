@@ -25,8 +25,8 @@ export default function NavBar() {
   // Simple search page navbar with FilterBar
   if (isSearchPage) {
     return (
-      <header className="sticky top-0 z-[9999] w-full bg-white border-b py-2 border-gray-200 text-black ">
-        <div className="mx-auto flex h-[72px] items-center justify-between  px-4 lg:px-8">
+      <header className="sticky top-0 z-[9999] w-full bg-white border-b py-2 border-gray-200 text-black">
+        <div className="mx-auto flex h-[72px] items-center justify-between px-4 lg:px-8">
           <div className="flex items-center gap-7">
             <Link
               href="/"
@@ -62,7 +62,9 @@ export default function NavBar() {
 
   return (
     <header
-      className={`${showNavBar ? "translate-y-0" : "-translate-y-full"} w-full sticky inset-x-0 top-0 z-[9999] bg-white shadow-md border-b-white/50 border-b-[0.2px] transition-all duration-500 ease-in-out`}
+      className={`${
+        showNavBar ? "translate-y-0" : "-translate-y-full"
+      } w-full sticky inset-x-0 top-0 z-[9999] bg-white shadow-md border-b-white/50 border-b-[0.2px] transition-all duration-500 ease-in-out`}
     >
       <DiscountBanner />
       <div className="flex items-center justify-between py-5 px-9 xl:px-20">
@@ -70,11 +72,7 @@ export default function NavBar() {
           href="/"
           className="flex items-center gap-2 font-extrabold tracking-[.15em]"
         >
-          <span
-            className={`text-black`}
-          >
-            Glampinghimalayas
-          </span>
+          <span className={`text-black`}>Glampinghimalayas</span>
         </Link>
         <nav
           className={`hidden gap-7 text-sm font-semibold ${
@@ -96,12 +94,7 @@ export default function NavBar() {
             </Link>
           ))}
         </nav>
-        <div>
-          <IoSearch
-            color={prevScrollPos >= 800 ? "white" : "black"}
-            size={25}
-          />
-        </div>
+     
       </div>
     </header>
   );

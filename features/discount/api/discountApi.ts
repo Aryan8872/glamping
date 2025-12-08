@@ -1,21 +1,28 @@
 import { DiscountOffer } from "../types/discountTypes";
 
-export const fetchActiveDiscount = async (): Promise<DiscountOffer> => {
-    // Simulate API call
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const futureDate = new Date();
-            futureDate.setDate(futureDate.getDate() + 2); // 2 days from now
+export const fetchActiveDiscount = async (): Promise<DiscountOffer | null> => {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}/discount/featured`);
+        if (!res.ok) throw new Error("Failed to fetch featured discount");
 
-            resolve({
-                id: "travel-tuesday-2024",
-                title: "TRAVEL TUESDAY",
-                description: "We want to provide an alternative to overconsumption. Buy memories instead of unnecessary products!",
-                discountPercentage: 30,
-                expiryDate: futureDate.toISOString(),
-                code: "TRAVEL30",
-                link: "/travel-tuesday"
-            });
-        }, 500);
-    });
+        const json = await res.json();
+        const data = json.data;
+
+        if (!data) return null;
+
+        return {
+            id: data.id.toString(),
+            title: data.name,
+            description: data.description || "",
+            discountPercentage: data.type === "PERCENTAGE"
+                ? data.amount
+                : data.amount, // Returning amount even if fixed, UI might need adjustment if using % symbol blindly
+            expiryDate: data.endsAt || data.startsAt, // Fallback if endsAt is null? Featured should have expiry usually.
+            code: "DISCOUNT", // Dummy code since backend doesn't have it
+            link: "#" // Dummy link
+        };
+    } catch (error) {
+        console.error("Error fetching discount:", error);
+        return null;
+    }
 };

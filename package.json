@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "cross-env SKIP_BUILD_STATIC_GENERATION=1 next build --turbopack",
+    "build:no-turbo": "cross-env SKIP_BUILD_STATIC_GENERATION=1 next build",
     "start": "next start",
     "lint": "eslint"
   },

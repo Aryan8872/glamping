@@ -16,6 +16,8 @@ export async function getCampById(id: number): Promise<Camp> {
 export async function searchCampsites(filters: SearchFilters) {
     const normalized: SearchFilters = {
         q: filters.q || "",
+        experience: filters.experience,
+        destination: filters.destination,
         minPrice: filters.minPrice,
         maxPrice: filters.maxPrice,
         checkIn: filters.checkIn,

@@ -49,7 +49,7 @@ export async function HttpGet(
         next?: { revalidate?: number; tags?: string[] };
     }
 ) {
-    const url = buildUrl(path);
+    let url = buildUrl(path); // Allow modification for retry
     const controller = new AbortController();
     const timeout = opts?.timeout ?? 10000;
     const maxRetries = Math.min(opts?.retries ?? 1, 3);
@@ -104,6 +104,15 @@ export async function HttpGet(
 
         } catch (e: any) {
             lastErr = e;
+
+            // 🔄 Localhost Fallback Strategy
+            if (url.includes("localhost") && attempt === 0) {
+                console.warn(`[HTTP] Localhost fetch failed, retrying with 127.0.0.1...`);
+                url = url.replace("localhost", "127.0.0.1");
+                // Don't increment attempt, give it a free retry on the new IP
+                continue;
+            }
+
             attempt++;
 
             if (!isRetryableError(e) || attempt > maxRetries) break;
@@ -129,7 +138,7 @@ export async function HttpPost(
         next?: { revalidate?: number; tags?: string[] };
     }
 ) {
-    const url = buildUrl(path);
+    let url = buildUrl(path);
     const controller = new AbortController();
     const timeout = opts?.timeout ?? 10000;
     const maxRetries = Math.min(opts?.retries ?? 1, 3);
@@ -187,6 +196,14 @@ export async function HttpPost(
             return data;
         } catch (e: any) {
             lastErr = e;
+
+            // 🔄 Localhost Fallback Strategy
+            if (url.includes("localhost") && attempt === 0) {
+                console.warn(`[HTTP] Localhost POST failed, retrying with 127.0.0.1...`);
+                url = url.replace("localhost", "127.0.0.1");
+                continue;
+            }
+
             attempt++;
 
             if (!isRetryableError(e) || attempt > maxRetries) break;
@@ -199,7 +216,7 @@ export async function HttpPost(
 
 
 export async function HttpPut(path: string, body: any, opts?: { headers?: Record<string, string>, timeout?: number, retries?: number, cache?: RequestCache, next?: { revalidate?: number, tags?: string[] } }) {
-    const url = buildUrl(path)
+    let url = buildUrl(path)
     const controller = new AbortController()
     const maxRetries = Math.min(opts?.retries ?? 1, 3)
     const timer = setTimeout(() => {
@@ -239,9 +256,16 @@ export async function HttpPut(path: string, body: any, opts?: { headers?: Record
             }
             return data
         }
-        catch (e) {
-
+        catch (e: any) { // Type e as any
             lastErr = e
+
+            // 🔄 Localhost Fallback Strategy
+            if (url.includes("localhost") && attempt === 0) {
+                console.warn(`[HTTP] Localhost PUT failed, retrying with 127.0.0.1...`);
+                url = url.replace("localhost", "127.0.0.1");
+                continue;
+            }
+
             attempt++
 
             if (!isRetryableError(e) || attempt > maxRetries) break
@@ -265,7 +289,7 @@ export async function HttpPatch(
         next?: { revalidate?: number; tags?: string[] };
     }
 ) {
-    const url = buildUrl(path);
+    let url = buildUrl(path);
     const controller = new AbortController();
     const timeout = opts?.timeout ?? 10000;
     const maxRetries = Math.min(opts?.retries ?? 1, 3);
@@ -320,6 +344,13 @@ export async function HttpPatch(
             return data;
         } catch (e: any) {
             lastErr = e;
+            // 🔄 Localhost Fallback Strategy
+            if (url.includes("localhost") && attempt === 0) {
+                console.warn(`[HTTP] Localhost PATCH failed, retrying with 127.0.0.1...`);
+                url = url.replace("localhost", "127.0.0.1");
+                continue;
+            }
+
             attempt++;
 
             if (!isRetryableError(e) || attempt > maxRetries) break;
@@ -342,7 +373,7 @@ export async function HttpDelete(
         next?: { revalidate?: number; tags?: string[] };
     }
 ) {
-    const url = buildUrl(path);
+    let url = buildUrl(path);
     const controller = new AbortController();
     const timeout = opts?.timeout ?? 10000;
     const maxRetries = Math.min(opts?.retries ?? 1, 3);
@@ -394,6 +425,13 @@ export async function HttpDelete(
             return data;
         } catch (e: any) {
             lastErr = e;
+            // 🔄 Localhost Fallback Strategy
+            if (url.includes("localhost") && attempt === 0) {
+                console.warn(`[HTTP] Localhost DELETE failed, retrying with 127.0.0.1...`);
+                url = url.replace("localhost", "127.0.0.1");
+                continue;
+            }
+
             attempt++;
 
             if (!isRetryableError(e) || attempt > maxRetries) break;

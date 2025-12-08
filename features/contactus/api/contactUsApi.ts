@@ -7,7 +7,7 @@ import z from "zod"
 
 
 export async function apiGetContactUs(): Promise<ContactUsType> {
-    const json = await HttpGet(`contact/all`, {
+    const json = await HttpGet(`contact`, {
         next: {
             tags: [ABOUT_US_TAG]
         }

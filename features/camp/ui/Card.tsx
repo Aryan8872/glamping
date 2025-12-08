@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { FaStar } from "react-icons/fa";
@@ -11,8 +12,8 @@ import { useRouter } from "next/navigation";
 const Card = ({ camp }: { camp: Camp }) => {
   const router = useRouter();
   return (
-    <div className="grid cursor-pointer grid-rows-[1fr_auto] gap-3 mb-2 ">
-      <div className="w-full">
+    <div className="grid cursor-pointer grid-rows-[1fr_auto] gap-3 mb-2  ">
+      <div className="relative w-full border border-gray-200 shadow-sm rounded-lg">
         {/* <Image fill src="/site1.webp" alt="camping site" className='rounded-lg'/> */}
         <ImageSlider
           id={camp.id}
@@ -21,8 +22,13 @@ const Card = ({ camp }: { camp: Camp }) => {
               `${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${image}`
           )}
           sliderClassname=""
-          imageClassname="aspect-[2/2.3] rounded-lg"
+          imageClassname="aspect-[2/2] sm:aspect-[2/2.3] rounded-lg"
         />
+        {camp.discountPercentage && camp.discountPercentage > 0 && (
+          <div className="absolute top-3 left-3 bg-white text-black text-xs font-bold px-3 py-1.5 rounded-md shadow-md z-10">
+            {camp.discountPercentage}% {camp.discountName || "Off"}
+          </div>
+        )}
       </div>
       <div
         onClick={() => router.push(`/camp/${camp.id}`)}
@@ -40,10 +46,27 @@ const Card = ({ camp }: { camp: Camp }) => {
             <IoLocation />
             {camp.location || "Camping location"}
           </span>
-          <span className=" text-sm font-medium">
-            Rs {camp.pricePerNight}{" "}
-            <span className="text-[13px]">/Per Night</span>
-          </span>
+          <div className="flex flex-col">
+            {camp.discountedPrice &&
+            camp.discountedPrice < camp.pricePerNight ? (
+              <>
+                <span className="text-xs text-red-500 line-through font-medium">
+                  Rs {camp.originalPrice || camp.pricePerNight}
+                </span>
+                <span className="text-sm font-bold text-green-700">
+                  Rs {camp.discountedPrice}{" "}
+                  <span className="text-[13px] text-gray-500 font-normal">
+                    /Per Night
+                  </span>
+                </span>
+              </>
+            ) : (
+              <span className="text-sm font-medium">
+                Rs {camp.pricePerNight}{" "}
+                <span className="text-[13px]">/Per Night</span>
+              </span>
+            )}
+          </div>
           <span className="flex items-center gap-1 font-medium text-sm">
             <BsPeople />
             {Number(camp.maxAdult) + Number(camp.maxChildren)} Guests

@@ -14,6 +14,9 @@ interface SearchState {
     loading: boolean;
     loadingMore: boolean;
 
+    // Error state
+    error: string | null;
+
     // Actions
     setFilters: (filters: SearchFilters) => void;
     updateFilter: (key: keyof SearchFilters, value: any) => void;
@@ -35,10 +38,11 @@ export const useSearchStore = create<SearchState>((set, get) => ({
     pagination: null,
     loading: false,
     loadingMore: false,
+    error: null,
 
     // Set all filters at once
     setFilters: (filters) => {
-        set({ filters: { ...filters, page: 1 } });
+        set({ filters: { ...filters, page: 1 }, error: null });
         get().search();
     },
 
@@ -46,6 +50,7 @@ export const useSearchStore = create<SearchState>((set, get) => ({
     updateFilter: (key, value) => {
         set((state) => ({
             filters: { ...state.filters, [key]: value, page: 1 },
+            error: null,
         }));
         get().search();
     },
@@ -53,7 +58,7 @@ export const useSearchStore = create<SearchState>((set, get) => ({
     // Perform search
     search: async () => {
         const { filters } = get();
-        set({ loading: true });
+        set({ loading: true, error: null });
 
         try {
             const res = await searchCampsites({ ...filters, page: 1 });
@@ -70,7 +75,10 @@ export const useSearchStore = create<SearchState>((set, get) => ({
             });
         } catch (error) {
             console.error('Search failed:', error);
-            set({ loading: false });
+            set({
+                loading: false,
+                error: "We couldn't load the campsites at this moment. Please try again later."
+            });
         }
     },
 
@@ -100,7 +108,7 @@ export const useSearchStore = create<SearchState>((set, get) => ({
             }));
         } catch (error) {
             console.error('Load more failed:', error);
-            set({ loadingMore: false });
+            set({ loadingMore: false, error: "Failed to load more results. Please try again." });
         }
     },
 
@@ -112,6 +120,7 @@ export const useSearchStore = create<SearchState>((set, get) => ({
             pagination: null,
             loading: false,
             loadingMore: false,
+            error: null,
         });
     },
 }));

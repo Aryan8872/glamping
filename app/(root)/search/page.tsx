@@ -1,24 +1,49 @@
 "use client";
 
 import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { useSearchStore } from "@/lib/store/searchStore";
 import Card from "../../../features/camp/ui/Card";
 import { FaSearch } from "react-icons/fa";
 import Map from "../../../features/camp/ui/Map";
 
-export default function CampsPage() {
-  const { results, loading, loadingMore, pagination, loadMore, search } =
-    useSearchStore();
+export default function SearchPage() {
+  const searchParams = useSearchParams();
+  const {
+    results,
+    loading,
+    loadingMore,
+    pagination,
+    loadMore,
+    search,
+    setFilters,
+    filters,
+  } = useSearchStore();
 
-  // Trigger initial search on mount
+  // Sync URL parameters to store on mount and when URL changes
   useEffect(() => {
-    search();
-  }, []);
+    const experience = searchParams.get("experience");
+    const destination = searchParams.get("destination");
+    const q = searchParams.get("q");
+
+    // Only update if there are URL params that differ from current filters
+    if (experience || destination || q) {
+      setFilters({
+        ...filters,
+        experience: experience || undefined,
+        destination: destination || undefined,
+        q: q || filters.q,
+      });
+    } else {
+      // Trigger search with current filters
+      search();
+    }
+  }, [searchParams]);
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="grid grid-cols-[1.5fr_1fr] gap-x-8 min-h-screen">
-        <div className="w-full  py-6 px-4">
+        <div className="w-full py-6 px-4">
           {/* Skeleton */}
           {loading && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
@@ -32,7 +57,7 @@ export default function CampsPage() {
           )}
           {/* Results */}
           {!loading && results.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {results.map((camp) => (
                 <Card key={camp.id} camp={camp} />
               ))}

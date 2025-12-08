@@ -4,7 +4,7 @@ import { Camp, PaginatedResponse, SearchFilters, Facility } from "../types/CampT
 const CAMP_TAG = "camps";
 
 export async function apiGetAllCamps() {
-    const data = await HttpGet("camp/all", {
+    const data = await HttpGet("campsite/all", {
         next: {
             tags: [CAMP_TAG]
         }
@@ -13,7 +13,7 @@ export async function apiGetAllCamps() {
 }
 
 export async function apiGetCampById(id: number) {
-    const res = await HttpGet(`camp/${id}`, {
+    const res = await HttpGet(`campsite/${id}`, {
         next: {
             tags: [CAMP_TAG]
         }
@@ -21,20 +21,6 @@ export async function apiGetCampById(id: number) {
     return res.data as Camp;
 }
 
-export async function apiCreateCamp(payload: FormData) {
-    const data = await HttpPost("camp/new", payload);
-    return data;
-}
-
-export async function apiUpdateCamp(id: number, payload: Partial<Camp> | FormData) {
-    const data = await HttpPatch(`camp/${id}`, payload);
-    return data;
-}
-
-export async function apiDeleteCamp(id: number) {
-    const data = await HttpDelete(`camp/${id}`);
-    return data;
-}
 
 export async function apiSearchCamps(filters: SearchFilters) {
     const params = new URLSearchParams();
@@ -49,7 +35,7 @@ export async function apiSearchCamps(filters: SearchFilters) {
         }
     });
 
-    const res = await HttpGet(`camp/search?${params.toString()}`, {
+    const res = await HttpGet(`campsite/search?${params.toString()}`, {
 
     });
     console.log(res)

@@ -79,23 +79,68 @@ export default function FilterBar() {
     load();
   }, []);
 
-  /* Debounce search */
+  /* Sync from Store to Local State */
   useEffect(() => {
-    const t = setTimeout(() => updateFilter("q", location), 300);
-    return () => clearTimeout(t);
-  }, [location]);
+    if (filters.q !== undefined && filters.q !== location) {
+      setLocation(filters.q);
+    }
+  }, [filters.q]);
 
-  /* Update price filter */
+  useEffect(() => {
+    const min = filters.minPrice ?? 0;
+    const max = filters.maxPrice ?? 5000;
+    if (priceRange[0] !== min || priceRange[1] !== max) {
+      setPriceRange([min, max]);
+    }
+  }, [filters.minPrice, filters.maxPrice]);
+
+  useEffect(() => {
+    if (filters.checkIn !== checkIn) setCheckIn(filters.checkIn ?? "");
+    if (filters.checkOut !== checkOut) setCheckOut(filters.checkOut ?? "");
+  }, [filters.checkIn, filters.checkOut]);
+
+  useEffect(() => {
+    setGuests((prev) => {
+      if (
+        prev.adults !== (filters.adults ?? 1) ||
+        prev.children !== (filters.children ?? 0) ||
+        prev.pets !== (filters.pets ?? 0)
+      ) {
+        return {
+          adults: filters.adults ?? 1,
+          children: filters.children ?? 0,
+          pets: filters.pets ?? 0,
+        };
+      }
+      return prev;
+    });
+  }, [filters.adults, filters.children, filters.pets]);
+
+  /* Debounce search (Write back to store) */
   useEffect(() => {
     const t = setTimeout(() => {
-      setFilters({
-        ...filters,
-        minPrice: priceRange[0],
-        maxPrice: priceRange[1],
-      });
+      if (location !== (filters.q ?? "")) {
+        updateFilter("q", location);
+      }
+    }, 300);
+    return () => clearTimeout(t);
+  }, [location, filters.q, updateFilter]);
+
+  /* Update price filter (Write back to store) */
+  useEffect(() => {
+    const t = setTimeout(() => {
+      const currentMin = filters.minPrice ?? 0;
+      const currentMax = filters.maxPrice ?? 5000;
+      if (priceRange[0] !== currentMin || priceRange[1] !== currentMax) {
+        setFilters({
+          ...filters,
+          minPrice: priceRange[0],
+          maxPrice: priceRange[1],
+        });
+      }
     }, 250);
     return () => clearTimeout(t);
-  }, [priceRange]);
+  }, [priceRange, filters, setFilters]);
 
   /* Dates */
   const handleDateChange = (ci: string, co: string) => {
@@ -128,11 +173,13 @@ export default function FilterBar() {
 
   /* Facility toggle */
   const toggleFacility = (id: string) => {
-    const list = filters.facilityIds ? filters.facilityIds.split(",") : [];
+    // filters.facilityIds is string[] | undefined
+    const list = filters.facilityIds || [];
     const updated = list.includes(id)
       ? list.filter((x) => x !== id)
       : [...list, id];
-    updateFilter("facilityIds", updated.join(","));
+    // updateFilter expects the value for the key. If key is 'facilityIds', value is string[]
+    updateFilter("facilityIds", updated);
   };
 
   /* ---------------------------------------------------
@@ -165,9 +212,7 @@ export default function FilterBar() {
         {/* ---------------------- Dates ---------------------- */}
         <div className="relative min-w-[100px]">
           <button
-            onClick={() =>
-              setOpenModal(openModal === "date" ? null : "date")
-            }
+            onClick={() => setOpenModal(openModal === "date" ? null : "date")}
             className="w-full flex items-center gap-3 px-4 py-1 border border-gray-300 rounded-xl"
           >
             <FaCalendarAlt className="text-gray-400" size={18} />
@@ -193,9 +238,7 @@ export default function FilterBar() {
                     type="date"
                     className="w-full border p-3 rounded-lg"
                     value={checkIn}
-                    onChange={(e) =>
-                      handleDateChange(e.target.value, checkOut)
-                    }
+                    onChange={(e) => handleDateChange(e.target.value, checkOut)}
                   />
                 </div>
 
@@ -205,9 +248,7 @@ export default function FilterBar() {
                     type="date"
                     className="w-full border p-3 rounded-lg"
                     value={checkOut}
-                    onChange={(e) =>
-                      handleDateChange(checkIn, e.target.value)
-                    }
+                    onChange={(e) => handleDateChange(checkIn, e.target.value)}
                   />
                 </div>
               </div>
@@ -218,9 +259,7 @@ export default function FilterBar() {
         {/* ---------------------- Guests ---------------------- */}
         <div className="relative min-w-[100px]">
           <button
-            onClick={() =>
-              setOpenModal(openModal === "guest" ? null : "guest")
-            }
+            onClick={() => setOpenModal(openModal === "guest" ? null : "guest")}
             className="w-full flex items-center gap-3 px-4 py-1 border border-gray-300 rounded-xl"
           >
             <FaUserFriends className="text-gray-400" size={18} />
@@ -276,9 +315,7 @@ export default function FilterBar() {
         {/* ---------------------- Price ---------------------- */}
         <div className="relative min-w-[100px]">
           <button
-            onClick={() =>
-              setOpenModal(openModal === "price" ? null : "price")
-            }
+            onClick={() => setOpenModal(openModal === "price" ? null : "price")}
             className="w-full flex items-center gap-3 px-4 py-1 border border-gray-300 rounded-xl"
           >
             <FaDollarSign className="text-gray-400" size={18} />
