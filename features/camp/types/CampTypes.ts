@@ -72,6 +72,7 @@ export interface SearchFilters {
     sort?: string;
     page?: number;
     limit?: number;
+    isFeatured?: boolean;
 }
 
 export interface PaginatedResponse<T> {

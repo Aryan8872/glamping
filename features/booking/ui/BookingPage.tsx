@@ -29,6 +29,23 @@ export default function BookingPage({ campData }: { campData: Camp }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Validate guests against camp limits
+  const isAdultsValid = adults <= campData.maxAdult;
+  const isChildrenValid = children <= campData.maxChildren;
+  const isPetsValid = pets <= campData.maxPets;
+
+  if (!isAdultsValid || !isChildrenValid || !isPetsValid) {
+    // We can render this check early or set error state.
+    // Since this is a server/client component mix, let's use a simple check.
+    // However, inside a render function we shouldn't cause side effects like setError loop.
+    // Better to compute error derived state.
+  }
+
+  const guestError =
+    !isAdultsValid || !isChildrenValid || !isPetsValid
+      ? `Guest limit exceeded. Max Adults: ${campData.maxAdult}, Max Children: ${campData.maxChildren}, Max Pets: ${campData.maxPets}`
+      : null;
+
   const nights =
     checkIn && checkOut
       ? differenceInDays(new Date(checkOut), new Date(checkIn))
@@ -41,6 +58,8 @@ export default function BookingPage({ campData }: { campData: Camp }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (guestError) return;
+
     setLoading(true);
     setError(null);
 
@@ -178,12 +197,14 @@ export default function BookingPage({ campData }: { campData: Camp }) {
             </p>
           </div>
 
-          {error && <div className="text-red-500 font-bold">{error}</div>}
+          {(error || guestError) && (
+            <div className="text-red-500 font-bold">{error || guestError}</div>
+          )}
 
           {/* Mobile Submit Button (visible only on small screens) */}
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || !!guestError}
             className="lg:hidden w-full bg-red-600 text-white font-bold py-4 rounded-lg mt-4 disabled:opacity-50"
           >
             {loading ? "Booking..." : "Book now"}

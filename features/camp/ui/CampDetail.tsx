@@ -149,14 +149,21 @@ export default function CampDetail({ campData }: { campData: Camp }) {
               Facilities
             </h2>
             <div className="flex flex-wrap gap-3">
-              {campData.campSiteFacilities?.map((facility, index) => (
-                <span
-                  className="px-4 py-2 bg-primary-green rounded-lg text-sm text-white font-medium"
-                  key={index}
-                >
-                  {facility.facility.name}
-                </span>
-              ))}
+              {(
+                campData.campSiteFacilities || (campData as any).facilities
+              )?.map((item: any, index: number) => {
+                const facilityName = item.facility?.name || item.name;
+                if (!facilityName) return null;
+
+                return (
+                  <span
+                    className="px-4 py-2 bg-primary-green rounded-lg text-sm text-white font-medium"
+                    key={index}
+                  >
+                    {facilityName}
+                  </span>
+                );
+              })}
             </div>
           </div>
 

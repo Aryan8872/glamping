@@ -1,0 +1,64 @@
+
+> saas-billing-next@0.1.0 build
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\User\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\User\Desktop\portfolio projects\SAAS subscription Billing system - Copy\frontend\saas-billing-next\package-lock.json
+
+   ▲ Next.js 16.0.7 (Turbopack)
+   - Environments: .env
+   - Experiments (use with caution):
+     ✓ turbopackFileSystemCacheForDev
+     ✓ useCache
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 6.6s
+   Running TypeScript ...
+   Collecting page data using 15 workers ...
+   Generating static pages using 15 workers (0/12) ...
+http://localhost:8080/campsite/search?isFeatured=true&limit=1
+Failed to fetch contact content: TypeError: fetch failed
+    at async f (C:\Users\User\Desktop\portfolio projects\SAAS subscription Billing system - Copy\frontend\saas-billing-next\.next\server\chunks\ssr\[root-of-the-server]__390553eb._.js:1:1965)
+    at async g (C:\Users\User\Desktop\portfolio projects\SAAS subscription Billing system - Copy\frontend\saas-billing-next\.next\server\chunks\ssr\[root-of-the-server]__390553eb._.js:1:2443) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+[HTTP] Localhost fetch failed, retrying with 127.0.0.1...
+Failed to fetch featured camp for Story: TypeError: fetch failed
+    at async e (C:\Users\User\Desktop\portfolio projects\SAAS subscription Billing system - Copy\frontend\saas-billing-next\.next\server\chunks\ssr\dec91_SAAS subscription Billing system - Copy_frontend_saas-billing-next_4b8a1dc7._.js:1:3912)
+    at async d (C:\Users\User\Desktop\portfolio projects\SAAS subscription Billing system - Copy\frontend\saas-billing-next\.next\server\chunks\ssr\dec91_SAAS subscription Billing system - Copy_frontend_saas-billing-next_4b8a1dc7._.js:1:5898)
+    at async q (C:\Users\User\Desktop\portfolio projects\SAAS subscription Billing system - Copy\frontend\saas-billing-next\.next\server\chunks\ssr\17053_on Billing system - Copy_frontend_saas-billing-next_app_(root)_page_tsx_926f7178._.js:1:10064) {
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:8080
+      at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+    errno: -4078,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 8080
+  }
+}
+Gallery fetch failed: TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+   Generating static pages using 15 workers (3/12) 
+   Generating static pages using 15 workers (6/12) 
+Failed to fetch About Us data: { status: 0, message: 'fetch failed' }
+Error occurred prerendering page "/about". Read more: https://nextjs.org/docs/messages/prerender-error
+Error: Attempted to call createMotionComponent() from the server but createMotionComponent is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component.
+    at <unknown> (C:\Users\User\Desktop\portfolio projects\SAAS subscription Billing system - Copy\frontend\saas-billing-next\.next\server\chunks\ssr\dec91_SAAS subscription Billing system - Copy_frontend_saas-billing-next_9572ff30._.js:1:682)
+    at Object.get (C:\Users\User\Desktop\portfolio projects\SAAS subscription Billing system - Copy\frontend\saas-billing-next\.next\server\chunks\ssr\dec91_SAAS subscription Billing system - Copy_frontend_saas-billing-next_9572ff30._.js:1:97184)
+    at eX (C:\Users\User\Desktop\portfolio projects\SAAS subscription Billing system - Copy\frontend\saas-billing-next\.next\server\chunks\ssr\dec91_SAAS subscription Billing system - Copy_frontend_saas-billing-next_9572ff30._.js:1:106818) {
+  digest: '1111758698'
+}
+Export encountered an error on /(root)/about/page: /about, exiting the build.
+ ⨯ Next.js build worker exited with code: 1 and signal: null

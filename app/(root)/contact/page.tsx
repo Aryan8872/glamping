@@ -1,10 +1,12 @@
 import Contact from "./Contact";
-import { getContactUsContent } from "@/features/contactus/service/aboutUsService";
+import { getContactUs } from "@/lib/api/contact";
+
+export const dynamic = "force-dynamic";
 
 export default async function page() {
   let contactdata;
   try {
-    contactdata = await getContactUsContent();
+    contactdata = await getContactUs();
   } catch (error) {
     console.error("Failed to fetch contact content:", error);
     // Fallback data (Industrial Standard: Graceful Degradation)
