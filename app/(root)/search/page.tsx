@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useSearchStore } from "@/lib/store/searchStore";
 import Card from "../../../features/camp/ui/Card";
 import { FaSearch } from "react-icons/fa";
 import Map from "../../../features/camp/ui/Map";
 
-export default function SearchPage() {
+function SearchPageContent() {
   const searchParams = useSearchParams();
   const {
     results,
@@ -100,5 +100,15 @@ export default function SearchPage() {
         <Map camps={results} />
       </div>
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense
+      fallback={<div className="p-8 text-center">Loading search...</div>}
+    >
+      <SearchPageContent />
+    </Suspense>
   );
 }

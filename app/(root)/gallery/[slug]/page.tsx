@@ -1,10 +1,12 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import GalleryDetail from "./GalleryDetail";
 
-export default async function page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export default function Page() {
+  const params = useParams();
+  const slug = params.slug as string;
+
   return <GalleryDetail slug={slug} />;
 }

@@ -5,8 +5,6 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   experimental: {
     turbopackFileSystemCacheForDev: true,
-    // Disable cacheComponents to avoid prerendering issues
-    cacheComponents: true,
   },
   images: {
     remotePatterns: [
@@ -16,11 +14,14 @@ const nextConfig: NextConfig = {
         port: '8080',
         pathname: '/uploads/**',
       },
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
     ],
     dangerouslyAllowSVG: true,
     unoptimized: true,
   },
-  // Skip static generation during build
   skipTrailingSlashRedirect: true,
 };
 

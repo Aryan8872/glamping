@@ -36,7 +36,6 @@ export async function getAllGallery(): Promise<GalleryItem[]> {
 }
 
 export async function getGallerybySlug(slug: string): Promise<GalleryItem> {
-  "use cache"
   const gallerybySlug = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_PATH || ""}/gallery/${slug}`,
     {
