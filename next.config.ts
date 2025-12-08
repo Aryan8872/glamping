@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   experimental: {
     turbopackFileSystemCacheForDev: true,
+    useCache: true,
   },
   images: {
     remotePatterns: [

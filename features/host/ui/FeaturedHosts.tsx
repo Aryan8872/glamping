@@ -1,10 +1,39 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { apiGetFeaturedHosts } from "../api/hostApi";
 import { FaStar, FaMedal } from "react-icons/fa";
+import { Host } from "../types/HostTypes";
 
-export default async function FeaturedHosts() {
-  const hosts = await apiGetFeaturedHosts();
+export default function FeaturedHosts() {
+  const [hosts, setHosts] = useState<Host[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchHosts() {
+      try {
+        const data = await apiGetFeaturedHosts();
+        setHosts(data || []);
+      } catch (error) {
+        console.error("Failed to fetch featured hosts:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchHosts();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-16 bg-white border-t border-gray-100">
+        <div className="container mx-auto px-4 text-center">
+          Loading hosts...
+        </div>
+      </section>
+    ); // Or a better skeleton
+  }
 
   if (!hosts || hosts.length === 0) {
     return null;
@@ -32,11 +61,11 @@ export default async function FeaturedHosts() {
                 <Image
                   src={
                     host.profilePicture
-                      ? `http://localhost:8080/${host.profilePicture.replace(
+                      ? `${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}/${host.profilePicture.replace(
                           /\\/g,
                           "/"
                         )}`
-                      : "/placeholder-avatar.jpg" // Ensure this exists or use a UI fallback
+                      : "/placeholder-avatar.jpg"
                   }
                   alt={host.fullName}
                   fill

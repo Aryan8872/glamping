@@ -9,7 +9,9 @@ interface ExperienceListProps {
   experiences: Experience[];
 }
 
-export default function ExperienceList({ experiences }: ExperienceListProps) {
+export default function ExperienceList({
+  experiences = [],
+}: ExperienceListProps) {
   const stagger = (delay = 0.1) => ({
     hidden: {},
     visible: { transition: { staggerChildren: 0.1, delayChildren: delay } },
