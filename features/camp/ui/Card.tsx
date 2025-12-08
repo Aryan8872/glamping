@@ -13,7 +13,7 @@ const Card = ({ camp }: { camp: Camp }) => {
   const router = useRouter();
   return (
     <div className="grid cursor-pointer grid-rows-[1fr_auto] gap-3 mb-2  ">
-      <div className="relative w-full border border-gray-200 shadow-sm rounded-lg">
+      <div className="relative w-full border border-gray-200 shadow-sm rounded-2xl">
         {/* <Image fill src="/site1.webp" alt="camping site" className='rounded-lg'/> */}
         <ImageSlider
           id={camp.id}
@@ -22,13 +22,15 @@ const Card = ({ camp }: { camp: Camp }) => {
               `${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${image}`
           )}
           sliderClassname=""
-          imageClassname="aspect-[2/2] sm:aspect-[2/2.3] rounded-lg"
+          imageClassname="aspect-[2/2.5] rounded-2xl"
         />
-        {camp.discountPercentage && camp.discountPercentage > 0 && (
-          <div className="absolute top-3 left-3 bg-white text-black text-xs font-bold px-3 py-1.5 rounded-md shadow-md z-10">
-            {camp.discountPercentage}% {camp.discountName || "Off"}
-          </div>
-        )}
+        {/* {camp.discountPercentage &&
+          camp.discountPercentage > 0 &&
+          camp.discountPercentage !== 0 && (
+            <div className="absolute top-3 left-3 bg-white text-black text-xs font-bold px-3 py-1.5 rounded-md shadow-md z-10">
+              {camp.discountPercentage}% {camp.discountName || "Off"}
+            </div>
+          )} */}
       </div>
       <div
         onClick={() => router.push(`/camp/${camp.id}`)}

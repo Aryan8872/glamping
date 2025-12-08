@@ -116,11 +116,11 @@ export const useSearchStore = create<SearchState>((set, get) => ({
     reset: () => {
         set({
             filters: initialFilters,
-            results: [],
-            pagination: null,
-            loading: false,
-            loadingMore: false,
             error: null,
+            pagination: null, // Reset pagination too
+            results: [],
+            loading: true, // Optimistically show loading
         });
+        get().search();
     },
 }));

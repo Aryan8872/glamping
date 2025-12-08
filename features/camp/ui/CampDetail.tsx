@@ -10,7 +10,8 @@ import {
   FaStar,
 } from "react-icons/fa";
 import { useReducer, useEffect } from "react";
-import { ModalWrapper } from "./FilterBar";
+import FilterModal from "./FilterModal";
+import GuestFilterModal from "./GuestFilterModal";
 import { DayPicker, DateRange } from "react-day-picker";
 import { format, differenceInDays } from "date-fns";
 import "react-day-picker/dist/style.css";
@@ -305,16 +306,17 @@ export default function CampDetail({ campData }: { campData: Camp }) {
 
             {/* Date Modal - Omitted for brevity since unchanged in this logic block, but kept structure */}
             {openModal === "date" && (
-              <ModalWrapper
+              <FilterModal
                 onClose={() =>
                   dispatch({ type: "SET_OPEN_MODAL", payload: null })
                 }
-                className="absolute top-0 right-0 mt-16 w-auto min-w-[660px] bg-white rounded-2xl shadow-2xl border p-6 z-50"
+                title="Select dates"
+                position="right"
+                className="w-auto min-w-[660px]"
               >
                 <div className="flex flex-col gap-6">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="text-xl font-bold mb-1">Select dates</h3>
                       <p className="text-gray-500 text-sm">
                         Add your travel dates for exact pricing
                       </p>
@@ -382,65 +384,24 @@ export default function CampDetail({ campData }: { campData: Camp }) {
                     </button>
                   </div>
                 </div>
-              </ModalWrapper>
+              </FilterModal>
             )}
 
             {/* Guest Modal */}
             {openModal === "guest" && (
-              <ModalWrapper
+              <GuestFilterModal
                 onClose={() =>
                   dispatch({ type: "SET_OPEN_MODAL", payload: null })
                 }
-                className="absolute top-[200px] right-0 w-80 bg-white rounded-2xl shadow-xl border p-6 z-50"
-              >
-                <div className="space-y-6">
-                  {(["adults", "children", "pets"] as const).map((type) => (
-                    <div
-                      key={type}
-                      className="flex items-center justify-between"
-                    >
-                      <div>
-                        <div className="font-semibold capitalize text-gray-900">
-                          {type}
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {type === "adults" && "Ages 13+"}
-                          {type === "children" && "Ages 2-12"}
-                          {type === "pets" && "Pets allowed"}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <button
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-black disabled:opacity-30 disabled:cursor-not-allowed"
-                          onClick={() =>
-                            dispatch({
-                              type: "UPDATE_GUESTS",
-                              payload: { type, delta: -1 },
-                            })
-                          }
-                          disabled={guests[type] === 0}
-                        >
-                          -
-                        </button>
-                        <span className="w-6 text-center font-medium">
-                          {guests[type]}
-                        </span>
-                        <button
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:border-black"
-                          onClick={() =>
-                            dispatch({
-                              type: "UPDATE_GUESTS",
-                              payload: { type, delta: 1 },
-                            })
-                          }
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </ModalWrapper>
+                guests={guests}
+                onChange={(type, delta) =>
+                  dispatch({
+                    type: "UPDATE_GUESTS",
+                    payload: { type, delta },
+                  })
+                }
+                className="w-80 top-[200px]"
+              />
             )}
 
             <button

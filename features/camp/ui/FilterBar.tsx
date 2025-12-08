@@ -1,42 +1,15 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { SearchFilters, Facility } from "@/features/camp/types/CampTypes";
+import { useState, useEffect } from "react";
+import { Facility } from "@/features/camp/types/CampTypes";
 import { getFacilities } from "@/features/camp/service/campService";
 import { IoSearch, IoClose } from "react-icons/io5";
 import { FaCalendarAlt, FaUserFriends, FaDollarSign } from "react-icons/fa";
 import { useSearchStore } from "@/lib/store/searchStore";
-
-/* ---------------------------------------------------
-   Reusable Modal Wrapper (Handles outside click)
---------------------------------------------------- */
-export function ModalWrapper({
-  children,
-  onClose,
-  className = "",
-}: {
-  children: React.ReactNode;
-  onClose: () => void;
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        onClose();
-      }
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
-
-  return (
-    <div ref={ref} className={className}>
-      {children}
-    </div>
-  );
-}
+import DateFilterModal from "./DateFilterModal";
+import GuestFilterModal from "./GuestFilterModal";
+import PriceFilterModal from "./PriceFilterModal";
+import AllFiltersModal from "./AllFiltersModal";
 
 export default function FilterBar() {
   const { filters, updateFilter, setFilters } = useSearchStore();
@@ -56,9 +29,9 @@ export default function FilterBar() {
   ]);
 
   // Modal states
-  const [openModal, setOpenModal] = useState<"date" | "guest" | "price" | null>(
-    null
-  );
+  const [openModal, setOpenModal] = useState<
+    "date" | "guest" | "price" | "all" | null
+  >(null);
 
   // Facilities
   const [facilities, setFacilities] = useState<Facility[]>([]);
@@ -171,30 +144,19 @@ export default function FilterBar() {
     });
   };
 
-  /* Facility toggle */
-  const toggleFacility = (id: string) => {
-    // filters.facilityIds is string[] | undefined
-    const list = filters.facilityIds || [];
-    const updated = list.includes(id)
-      ? list.filter((x) => x !== id)
-      : [...list, id];
-    // updateFilter expects the value for the key. If key is 'facilityIds', value is string[]
-    updateFilter("facilityIds", updated);
-  };
-
   /* ---------------------------------------------------
-         UI (modals now use ModalWrapper)
+         UI (modals now use specialized components)
   --------------------------------------------------- */
   return (
     <div className="w-full">
-      <div className="flex flex-wrap lg:flex-nowrap gap-3 items-center">
+      <div className="flex xl:grid xl:grid-cols-[2fr_1fr] items-center gap-4">
         {/* ---------------------- Location ---------------------- */}
-        <div className="flex-1 relative">
+        <div className="relative flex-1">
           <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
             <IoSearch size={20} />
           </div>
           <input
-            className="w-full pl-12 pr-10 py-2.5 border border-gray-300 rounded-xl text-sm placeholder:text-gray-400"
+            className="w-full pl-12 pr-10 py-3 border border-gray-200 rounded-full shadow-sm text-sm placeholder:text-gray-400 hover:shadow-md transition-shadow focus:outline-none focus:ring-2 focus:ring-black/5"
             placeholder="Search destinations..."
             value={location}
             onChange={(e) => setLocation(e.target.value)}
@@ -202,160 +164,138 @@ export default function FilterBar() {
           {location && (
             <button
               onClick={() => setLocation("")}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100"
             >
               <IoClose size={18} />
             </button>
           )}
         </div>
 
-        {/* ---------------------- Dates ---------------------- */}
-        <div className="relative min-w-[100px]">
+        {/* ---------------------- Mobile Filter Trigger ---------------------- */}
+        <div className="xl:hidden">
           <button
-            onClick={() => setOpenModal(openModal === "date" ? null : "date")}
-            className="w-full flex items-center gap-3 px-4 py-1 border border-gray-300 rounded-xl"
+            onClick={() => setOpenModal("all")}
+            className="p-3 border border-gray-200 rounded-full hover:shadow-md transition-all active:scale-95 bg-white"
           >
-            <FaCalendarAlt className="text-gray-400" size={18} />
-            <div>
-              <div className="text-xs text-gray-500 uppercase">Dates</div>
-              <div className="text-sm">
-                {checkIn && checkOut
-                  ? `${checkIn} - ${checkOut}`
-                  : "Select dates"}
-              </div>
+            <div className="relative">
+              <span className="w-5 h-5 grid place-items-center">
+                <svg
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  role="presentation"
+                  focusable="false"
+                  style={{
+                    display: "block",
+                    height: "16px",
+                    width: "16px",
+                    fill: "currentcolor",
+                  }}
+                >
+                  <path d="M5 8c1.306 0 2.418.835 2.83 2H14v2H7.829A3.001 3.001 0 1 1 5 8zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6-8a3 3 0 1 1-2.829 4H2V4h6.17A3.001 3.001 0 0 1 11 2zm0 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
+                </svg>
+              </span>
             </div>
           </button>
-
-          {openModal === "date" && (
-            <ModalWrapper
-              onClose={() => setOpenModal(null)}
-              className="absolute top-full left-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border p-6 z-50"
-            >
-              <div className="flex flex-col gap-4">
-                <div>
-                  <label className="text-xs font-bold">Check In</label>
-                  <input
-                    type="date"
-                    className="w-full border p-3 rounded-lg"
-                    value={checkIn}
-                    onChange={(e) => handleDateChange(e.target.value, checkOut)}
-                  />
-                </div>
-
-                <div>
-                  <label className="text-xs font-bold">Check Out</label>
-                  <input
-                    type="date"
-                    className="w-full border p-3 rounded-lg"
-                    value={checkOut}
-                    onChange={(e) => handleDateChange(checkIn, e.target.value)}
-                  />
-                </div>
-              </div>
-            </ModalWrapper>
-          )}
         </div>
 
-        {/* ---------------------- Guests ---------------------- */}
-        <div className="relative min-w-[100px]">
-          <button
-            onClick={() => setOpenModal(openModal === "guest" ? null : "guest")}
-            className="w-full flex items-center gap-3 px-4 py-1 border border-gray-300 rounded-xl"
-          >
-            <FaUserFriends className="text-gray-400" size={18} />
-            <div>
-              <div className="text-xs text-gray-500 uppercase">Guests</div>
-              <div className="text-sm">
-                {guests.adults + guests.children} guests
-              </div>
-            </div>
-          </button>
-
-          {openModal === "guest" && (
-            <ModalWrapper
-              onClose={() => setOpenModal(null)}
-              className="absolute top-full right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border p-6 z-50"
+        {/* ---------------------- Desktop Filters ---------------------- */}
+        <div className="hidden xl:flex items-center gap-3">
+          <div className="relative">
+            <button
+              onClick={() => setOpenModal(openModal === "date" ? null : "date")}
+              className={`flex items-center gap-3 px-5 py-2.5 border rounded-full transition-all hover:shadow-md text-sm ${
+                openModal === "date"
+                  ? "border-black bg-gray-50"
+                  : "border-gray-200"
+              }`}
             >
-              <div className="space-y-5">
-                {(["adults", "children", "pets"] as const).map((type) => (
-                  <div key={type} className="flex items-center justify-between">
-                    <div>
-                      <div className="text-sm font-semibold capitalize">
-                        {type}
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        {type === "adults" && "Ages 13+"}
-                        {type === "children" && "Ages 2-12"}
-                        {type === "pets" && "Pets allowed"}
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <button
-                        className="w-9 h-9 rounded-full border-2 border-gray-300 hover:border-black"
-                        onClick={() => handleGuestChange(type, -1)}
-                        disabled={guests[type] === 0}
-                      >
-                        −
-                      </button>
-                      <span className="w-8 text-center">{guests[type]}</span>
-                      <button
-                        className="w-9 h-9 rounded-full border-2 border-gray-300 hover:border-black"
-                        onClick={() => handleGuestChange(type, 1)}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                ))}
+              <div className="text-left">
+                {checkIn && checkOut ? (
+                  <span className="font-medium">
+                    {checkIn} - {checkOut}
+                  </span>
+                ) : (
+                  <span className="text-gray-600">Add dates</span>
+                )}
               </div>
-            </ModalWrapper>
-          )}
-        </div>
+            </button>
+            {openModal === "date" && (
+              <DateFilterModal
+                onClose={() => setOpenModal(null)}
+                onChange={handleDateChange}
+                checkIn={checkIn}
+                checkOut={checkOut}
+              />
+            )}
+          </div>
 
-        {/* ---------------------- Price ---------------------- */}
-        <div className="relative min-w-[100px]">
-          <button
-            onClick={() => setOpenModal(openModal === "price" ? null : "price")}
-            className="w-full flex items-center gap-3 px-4 py-1 border border-gray-300 rounded-xl"
-          >
-            <FaDollarSign className="text-gray-400" size={18} />
-            <div>
-              <div className="text-xs text-gray-500 uppercase">Price</div>
-              <div className="text-sm">
-                NPR {priceRange[0]} - {priceRange[1]}
-              </div>
-            </div>
-          </button>
-
-          {openModal === "price" && (
-            <ModalWrapper
-              onClose={() => setOpenModal(null)}
-              className="absolute top-full right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border p-6 z-50"
+          <div className="relative">
+            <button
+              onClick={() =>
+                setOpenModal(openModal === "guest" ? null : "guest")
+              }
+              className={`flex items-center gap-3 px-5 py-2.5 border rounded-full transition-all hover:shadow-md text-sm ${
+                openModal === "guest"
+                  ? "border-black bg-gray-50"
+                  : "border-gray-200"
+              }`}
             >
-              <div className="space-y-4">
-                <div className="flex justify-between">
-                  <span className="text-sm font-semibold">Price Range</span>
-                  <span className="text-sm font-bold">
+              <div className="text-left">
+                {guests.adults + guests.children > 0 ? (
+                  <span className="font-medium">
+                    {guests.adults + guests.children} guests
+                  </span>
+                ) : (
+                  <span className="text-gray-600">Add guests</span>
+                )}
+              </div>
+            </button>
+            {openModal === "guest" && (
+              <GuestFilterModal
+                onClose={() => setOpenModal(null)}
+                guests={guests}
+                onChange={handleGuestChange}
+              />
+            )}
+          </div>
+
+          <div className="relative">
+            <button
+              onClick={() =>
+                setOpenModal(openModal === "price" ? null : "price")
+              }
+              className={`flex items-center gap-3 px-5 py-2.5 border rounded-full transition-all hover:shadow-md text-sm ${
+                openModal === "price"
+                  ? "border-black bg-gray-50"
+                  : "border-gray-200"
+              }`}
+            >
+              <div className="text-left">
+                {priceRange[0] > 0 || priceRange[1] < 5000 ? (
+                  <span className="font-medium">
                     NPR {priceRange[0]} - {priceRange[1]}
                   </span>
-                </div>
-
-                <input
-                  type="range"
-                  min={0}
-                  max={5000}
-                  step={100}
-                  value={priceRange[1]}
-                  onChange={(e) =>
-                    setPriceRange([priceRange[0], Number(e.target.value)])
-                  }
-                  className="w-full h-2 bg-gray-200 rounded-lg accent-black"
-                />
+                ) : (
+                  <span className="text-gray-600">Price</span>
+                )}
               </div>
-            </ModalWrapper>
-          )}
+            </button>
+            {openModal === "price" && (
+              <PriceFilterModal
+                onClose={() => setOpenModal(null)}
+                priceRange={priceRange}
+                onChange={(min, max) => setPriceRange([min, max])}
+              />
+            )}
+          </div>
         </div>
       </div>
+
+      {/* Mobile Modal */}
+      {openModal === "all" && (
+        <AllFiltersModal onClose={() => setOpenModal(null)} />
+      )}
     </div>
   );
 }

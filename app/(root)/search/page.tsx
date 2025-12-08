@@ -6,6 +6,7 @@ import { useSearchStore } from "@/lib/store/searchStore";
 import Card from "../../../features/camp/ui/Card";
 import { FaSearch } from "react-icons/fa";
 import Map from "../../../features/camp/ui/Map";
+import FilterBar from "@/features/camp/ui/FilterBar";
 
 function SearchPageContent() {
   const searchParams = useSearchParams();
@@ -41,9 +42,12 @@ function SearchPageContent() {
   }, [searchParams]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="grid grid-cols-[1.5fr_1fr] gap-x-8 min-h-screen">
-        <div className="w-full py-6 px-4">
+    <div className="min-h-screen -mx-3 xl:-mx-20 ">
+      <div className="grid sm:grid-cols-[1.5fr_1fr] gap-x-3 min-h-screen">
+        <div className="w-full flex flex-col gap-5 px-6 sm:px-4">
+          <div className="xl:hidden block">
+            <FilterBar />
+          </div>
           {/* Skeleton */}
           {loading && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
@@ -97,7 +101,9 @@ function SearchPageContent() {
             </div>
           )}
         </div>
-        <Map camps={results} />
+        <div className="sm:block hidden">
+          <Map camps={results} />
+        </div>
       </div>
     </div>
   );
