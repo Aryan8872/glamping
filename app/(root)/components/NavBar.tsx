@@ -38,7 +38,9 @@ export default function NavBar() {
               <Image src="/logo.svg" alt="Logo" width={80} height={80} />
               <p className="flex flex-col gap-2">
                 <span className="text-primary-green">CAMPORA</span>
-                <span className="text-primary-green text-sm">Himalayan escapes</span>
+                <span className="text-primary-green text-sm">
+                  Himalayan escapes
+                </span>
               </p>
             </Link>
             <div className="xl:block hidden">
@@ -115,6 +117,12 @@ export default function NavBar() {
           className="flex items-center gap-2 font-extrabold tracking-[.15em]"
         >
           <Image src="/logo.svg" alt="Logo" width={70} height={70} />
+          <p className="flex flex-col gap-2">
+            <span className="text-primary-green">CAMPORA</span>
+            <span className="text-primary-green text-sm">
+              Himalayan escapes
+            </span>
+          </p>
         </Link>
         <nav
           className={`hidden gap-7 text-sm font-semibold ${
