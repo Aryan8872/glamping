@@ -1,0 +1,56 @@
+
+> saas-billing-next@0.1.0 build
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\User\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\User\Desktop\portfolio projects\SAAS subscription Billing system - Copy\frontend\saas-billing-next\package-lock.json
+
+   ▲ Next.js 16.0.7 (Turbopack)
+   - Environments: .env
+   - Experiments (use with caution):
+     ✓ turbopackFileSystemCacheForDev
+     ✓ useCache
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 6.3s
+   Running TypeScript ...
+   Collecting page data using 15 workers ...
+   Generating static pages using 15 workers (0/9) ...
+   Generating static pages using 15 workers (2/9) 
+Gallery fetch failed: TypeError: fetch failed
+    at ignore-listed frames {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+   Generating static pages using 15 workers (4/9) 
+   Generating static pages using 15 workers (6/9) 
+ ✓ Generating static pages using 15 workers (9/9) in 534.9ms
+   Finalizing page optimization ...
+
+Route (app)                      Revalidate  Expire
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /about
+├ ○ /adventures
+├ ƒ /adventures/[adventureSlug]
+├ ƒ /api/contact/all
+├ ƒ /api/gallery/[slug]
+├ ƒ /api/gallery/all
+├ ○ /blogs
+├ ƒ /booking/[campId]
+├ ƒ /camp/[id]
+├ ƒ /contact
+├ ○ /gallery                             1m      1y
+├ ƒ /gallery/[slug]
+└ ○ /search
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
