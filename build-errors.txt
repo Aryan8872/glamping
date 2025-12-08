@@ -64,7 +64,7 @@ months old.  To ensure accurate
 Baseline data, please update: `npm 
 i baseline-browser-mapping@latest 
 -D`
- Γ£ô Compiled successfully in 24.5s
+ Γ£ô Compiled successfully in 7.3s
    Running TypeScript ...
    Collecting page data ...
 [baseline-browser-mapping] The 
@@ -165,13 +165,20 @@ Baseline data, please update: `npm
 i baseline-browser-mapping@latest 
 -D`
 http://localhost:8080/contact
-http://localhost:8080/destination/all
 http://localhost:8080/experience/all
 http://localhost:8080/user/featured-hosts
+Gallery fetch failed: TypeError: 
+fetch failed
+    at ignore-listed frames {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
    Generating static pages (3/12) 
    Generating static pages (6/12) 
    Generating static pages (9/12) 
- Γ£ô Generating static pages (12/12) in 881.9ms
+ Γ£ô Generating static pages (12/12) in 804.3ms
    Finalizing page optimization ...
 
 Route (app)                      Revalidate  Expire

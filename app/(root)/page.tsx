@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import CampingHero from "./components/CampingHero";
 import Story from "./components/Story";
 import FeaturedDestinations from "./components/FeaturedDestinations";
@@ -10,14 +13,24 @@ import Testimonials from "@/features/testimonial/ui/Testimonials";
 import PopularRegions from "@/features/destination/ui/DestinationsSection";
 import { apiGetAllDestinations } from "@/features/destination/api/destinationApi";
 
-export default async function Home() {
-  let destinationData: any[] = [];
+export default function Home() {
+  const [destinationData, setDestinationData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  try {
-    destinationData = await apiGetAllDestinations();
-  } catch (error) {
-    console.error("Failed to load destinations:", error);
-  }
+  useEffect(() => {
+    async function fetchDestinations() {
+      try {
+        const data = await apiGetAllDestinations();
+        setDestinationData(data);
+      } catch (error) {
+        console.error("Failed to load destinations:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchDestinations();
+  }, []);
 
   return (
     <div className="font-sans">
@@ -35,7 +48,7 @@ export default async function Home() {
 
       {/* <FeaturedDestinations /> */}
 
-      <PopularRegions data={destinationData} />
+      {!loading && <PopularRegions data={destinationData} />}
 
       <Suspense
         fallback={
