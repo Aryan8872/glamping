@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { GalleryItem } from "@/types/GalleryTypes";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 
 const gridContainerVariants = {
   hidden: { opacity: 0 },
@@ -43,10 +44,13 @@ const GalleryGrid = ({ galleryData }: { galleryData: GalleryItem[] }) => {
               variants={gridSquareVariants}
               className="relative h-full rounded-md"
             >
-              <motion.img
+              <ImageWithFallback
                 src={`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${gallery.coverImage}`}
                 alt={gallery.title}
-                className="h-full w-full object-cover rounded-md transition-transform duration-700 group-hover:scale-110"
+                className="h-full w-full object-cover rounded-md"
+                wrapperClassName="h-full w-full rounded-md"
+                fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-80 rounded-md"></div>
               <div className="absolute bottom-0 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all ease-out duration-500 w-full px-4 pb-6 text-center text-white">

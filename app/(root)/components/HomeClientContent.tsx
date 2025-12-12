@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import PopularRegions from "@/features/destination/ui/DestinationsSection";
 import { apiGetAllDestinations } from "@/features/destination/api/destinationApi";
+import DestinationsSkeleton from "@/components/skeletons/DestinationsSkeleton";
 
 export default function HomeClientContent() {
   const [destinationData, setDestinationData] = useState<any[]>([]);
@@ -23,7 +24,7 @@ export default function HomeClientContent() {
     fetchDestinations();
   }, []);
 
-  if (loading) return null; // Or a loading skeleton
+  if (loading) return <DestinationsSkeleton />;
 
   return <PopularRegions data={destinationData} />;
 }

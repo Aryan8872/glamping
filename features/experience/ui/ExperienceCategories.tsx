@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { apiGetAllExperiences } from "../api/experienceApi";
 import ExperienceList from "./ExperienceList";
 import { Experience } from "../types/ExperienceTypes";
+import ExperiencesSkeleton from "@/components/skeletons/ExperiencesSkeleton";
 
 export default function ExperienceCategories() {
   const [experiences, setExperiences] = useState<Experience[]>([]);
@@ -25,7 +26,7 @@ export default function ExperienceCategories() {
   }, []);
 
   if (loading) {
-    return null; // Or a skeleton/loading state
+    return <ExperiencesSkeleton />;
   }
 
   if (!experiences || experiences.length === 0) {

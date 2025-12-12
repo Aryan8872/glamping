@@ -8,6 +8,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { FaStar, FaHeart, FaBolt } from "react-icons/fa";
 import { Camp } from "../types/CampTypes";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 
 interface Props {
   results: Camp[];
@@ -19,7 +20,10 @@ export default function SearchResults({ results, loading }: Props) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {[...Array(6)].map((_, i) => (
-          <div key={i} className="rounded-xl border border-gray-100 bg-white p-3 shadow-sm">
+          <div
+            key={i}
+            className="rounded-xl border border-gray-100 bg-white p-3 shadow-sm"
+          >
             <div className="h-64 w-full rounded-lg bg-gray-200 animate-pulse mb-3" />
             <div className="h-6 w-3/4 bg-gray-200 animate-pulse rounded mb-2" />
             <div className="h-4 w-1/2 bg-gray-200 animate-pulse rounded" />
@@ -54,9 +58,21 @@ export default function SearchResults({ results, loading }: Props) {
               pagination={{ clickable: true, dynamicBullets: true }}
               className="h-full w-full"
             >
-              {(camp.images.length ? camp.images : ["https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&auto=format&fit=crop&q=60"]).map((img, idx) => (
+              {(camp.images.length
+                ? camp.images
+                : [
+                    "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&auto=format&fit=crop&q=60",
+                  ]
+              ).map((img, idx) => (
                 <SwiperSlide key={idx}>
-                  <img src={img} alt={camp.name} className="h-full w-full object-cover" />
+                  <ImageWithFallback
+                    src={img}
+                    alt={camp.name}
+                    className="h-full w-full object-cover"
+                    wrapperClassName="h-full w-full"
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -69,7 +85,9 @@ export default function SearchResults({ results, loading }: Props) {
                   {camp.name}
                 </h2>
                 <p className="text-sm text-gray-500">{camp.location}</p>
-                <p className="text-sm text-gray-500 mt-0.5">{camp.maxAdult + camp.maxChildren} guests</p>
+                <p className="text-sm text-gray-500 mt-0.5">
+                  {camp.maxAdult + camp.maxChildren} guests
+                </p>
               </div>
               <div className="flex flex-col items-end">
                 <div className="flex items-center gap-1 text-sm font-bold text-gray-900">
@@ -79,7 +97,9 @@ export default function SearchResults({ results, loading }: Props) {
                 <div className="flex items-center gap-1 text-xs font-medium text-gray-800 mt-1">
                   <FaStar className="text-amber-400" />
                   <span>{camp.rating || "New"}</span>
-                  <span className="text-gray-400">({Math.floor(Math.random() * 50) + 1} reviews)</span>
+                  <span className="text-gray-400">
+                    ({Math.floor(Math.random() * 50) + 1} reviews)
+                  </span>
                 </div>
               </div>
             </div>

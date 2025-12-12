@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Experience } from "../types/ExperienceTypes";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 
 interface ExperienceListProps {
   experiences: Experience[];
@@ -69,8 +70,9 @@ export default function ExperienceList({
               style={{ willChange: "transform" }}
             >
               <Link href={`/search?experience=${exp.slug}`}>
-                <img
-                  className="h-full w-full object-cover aspect-[2/4] sm:aspect-[2/2] xl:aspect-[2/3] brightness-90"
+                <ImageWithFallback
+                  className="h-full w-full object-cover brightness-90"
+                  wrapperClassName="h-full w-full aspect-[2/2] xl:aspect-[2/3]"
                   src={
                     exp.imageUrl
                       ? `${
@@ -82,16 +84,17 @@ export default function ExperienceList({
                       : "https://images.unsplash.com/photo-1504280390367-361c6d9838f4?q=80&w=800&auto=format&fit=crop"
                   }
                   alt={exp.title}
-                  loading="lazy"
+                  fill
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 />
                 <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-[#060a0c]/90" />
                 <div className="absolute inset-x-4 bottom-11 z-10 flex-col text-center">
                   <div className="group/tour-title">
-                    <div className="uppercase text-xl text-white wrap-anywhere font-bold group-hover/tour-title:text-emerald-400">
+                    <div className="uppercase  sm:text-xl text-white wrap-anywhere font-bold group-hover/tour-title:text-emerald-400">
                       {exp.title}
                     </div>
                     {exp.description && (
-                      <div className="opacity-0 text-white group-hover:opacity-100 wrap-anywhere transition-all duration-200 ease-in-out text-sm mt-3 text-[#8ba1ab]">
+                      <div className="hidden sm:block opacity-0  group-hover:opacity-100 wrap-anywhere transition-all duration-200 ease-in-out text-sm mt-3 text-[#8ba1ab]">
                         {exp.description}
                       </div>
                     )}

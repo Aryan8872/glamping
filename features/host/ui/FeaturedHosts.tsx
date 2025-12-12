@@ -5,6 +5,7 @@ import Image from "next/image";
 import { apiGetFeaturedHosts } from "../api/hostApi";
 import { FaStar, FaMedal } from "react-icons/fa";
 import { Host } from "../types/HostTypes";
+import FeaturedHostsSkeleton from "@/components/skeletons/FeaturedHostsSkeleton";
 
 export default function FeaturedHosts() {
   const [hosts, setHosts] = useState<Host[]>([]);
@@ -26,13 +27,7 @@ export default function FeaturedHosts() {
   }, []);
 
   if (loading) {
-    return (
-      <section className="py-16 bg-white border-t border-gray-100">
-        <div className="container mx-auto px-4 text-center">
-          Loading hosts...
-        </div>
-      </section>
-    ); // Or a better skeleton
+    return <FeaturedHostsSkeleton />;
   }
 
   if (!hosts || hosts.length === 0) {
@@ -61,10 +56,9 @@ export default function FeaturedHosts() {
                 <Image
                   src={
                     host.profilePicture
-                      ? `${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}/${host.profilePicture.replace(
-                          /\\/g,
-                          "/"
-                        )}`
+                      ? `${
+                          process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL
+                        }/${host.profilePicture.replace(/\\/g, "/")}`
                       : "/placeholder-avatar.jpg"
                   }
                   alt={host.fullName}

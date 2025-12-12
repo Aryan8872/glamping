@@ -6,6 +6,7 @@ const CAMP_TAG = "camps";
 export async function apiGetAllCamps() {
     const data = await HttpGet("campsite/all", {
         next: {
+            revalidate: 60 * 60 * 24,
             tags: [CAMP_TAG]
         }
     });

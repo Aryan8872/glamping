@@ -111,7 +111,7 @@ export default function NavBar() {
       } w-full sticky inset-x-0 top-0 z-[9999] bg-white shadow-md border-b-white/50 border-b-[0.2px] transition-all duration-500 ease-in-out`}
     >
       <DiscountBanner />
-      <div className="flex items-center justify-between py-1 px-9 xl:px-20">
+      <div className="flex items-center justify-between py-1 px-3 sm:px-9 xl:px-20">
         <Link
           href="/"
           className="flex items-center gap-2 font-extrabold tracking-[.15em]"

@@ -1,9 +1,9 @@
-"use client"
+"use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Adventure } from "../types/adventureTypes";
-export default  function AdventureCard({data}:{data:Adventure[]}) {
-  
+import { ImageWithFallback } from "@/components/ImageWithFallback";
+export default function AdventureCard({ data }: { data: Adventure[] }) {
   const stagger = (delay = 0.1) => ({
     hidden: {},
     visible: { transition: { staggerChildren: 0.1, delayChildren: delay } },
@@ -61,23 +61,25 @@ export default  function AdventureCard({data}:{data:Adventure[]}) {
               className="group relative min-h-[280px] overflow-hidden  rounded-2xl border border-white/10 bg-[#11171b] cursor-pointer transform-gpu"
               style={{ willChange: "transform" }}
             >
-              <Link href={`/adventures/${adventure.slug}`} className="rounded-2xl">
-                <img
-                  className="h-full w-full object-cover aspect-[2/4] sm:aspect-[2/2] xl:aspect-[2/3] brightness-90 rounded-2xl"
+              <Link
+                href={`/adventures/${adventure.slug}`}
+                className="rounded-2xl"
+              >
+                <ImageWithFallback
+                  className="h-full w-full object-cover brightness-90 rounded-2xl"
+                  wrapperClassName="h-full w-full aspect-[2/2] xl:aspect-[2/3] rounded-2xl"
                   src={`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${adventure.coverImage}`}
-                  alt={`Tour ${i + 1}`}
-                  loading="lazy"
-                  decoding="async"
-                  fetchPriority="low"
+                  alt={adventure.name}
+                  fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 />
                 <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-[#060a0c]/90" />
                 <div className="absolute inset-x-4 bottom-11 z-10 flex-col text-center">
                   <div className="group/tour-title">
-                    <div className="uppercase text-xl wrap-anywhere font-bold text-white group-hover/tour-title:text-emerald-400">
+                    <div className="uppercase sm:text-xl wrap-anywhere font-bold text-white group-hover/tour-title:text-emerald-400">
                       {adventure.name}
                     </div>
-                    <div className="opacity-0 group-hover:opacity-100 wrap-anywhere transition-all duration-200 ease-in-out text-sm mt-3 text-[#8ba1ab]">
+                    <div className="hidden sm:block opacity-0 group-hover:opacity-100 wrap-anywhere transition-all duration-200 ease-in-out text-sm mt-3 text-[#8ba1ab]">
                       {adventure.description}
                     </div>
                   </div>

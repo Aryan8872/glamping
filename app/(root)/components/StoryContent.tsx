@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Camp } from "@/features/camp/types/CampTypes";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -67,11 +68,13 @@ export default function StoryContent({ featuredCamp }: { featuredCamp: Camp }) {
                 i === 0 ? "col-span-2 row-span-2 aspect-4/3" : "aspect-4/3"
               }`}
             >
-              <img
+              <ImageWithFallback
                 className="h-full w-full object-cover"
+                wrapperClassName="h-full w-full"
                 src={`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${src}`}
                 alt="story"
-                loading="lazy"
+                fill
+                sizes="(min-width: 1024px) 33vw, 50vw"
               />
             </motion.div>
           ))}

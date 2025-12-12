@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { Destination } from "../types/DestinationTypes";
 import { motion, AnimatePresence } from "framer-motion";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 
 export default function DestinationsSection({ data }: { data: Destination[] }) {
   const [expandedId, setExpandedId] = useState<number | null>(null);
@@ -25,9 +25,10 @@ export default function DestinationsSection({ data }: { data: Destination[] }) {
             We Spotted Our Popular Locations for You
           </h2>
           <p className="text-gray-500 mt-2 wrap-anywhere">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam, eveniet!
-            Quae similique numquam aut itaque odio eius. Labore veniam nulla non odit
-            laborum perspiciatis, commodi blanditiis eligendi, quis officia veritatis!
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam,
+            eveniet! Quae similique numquam aut itaque odio eius. Labore veniam
+            nulla non odit laborum perspiciatis, commodi blanditiis eligendi,
+            quis officia veritatis!
           </p>
         </div>
 
@@ -39,17 +40,17 @@ export default function DestinationsSection({ data }: { data: Destination[] }) {
                 key={dest.id}
                 className="flex flex-col max-h-[450px] border-b border-t border-gray-200 py-2"
               >
-                <div onClick={() => toggle(dest.id)} className="flex cursor-pointer justify-between items-center cursor-pointer">
-                  <span className="font-semibold capitalize text-lg">{dest.name}</span>
+                <div
+                  onClick={() => toggle(dest.id)}
+                  className="flex cursor-pointer justify-between items-center"
+                >
+                  <span className="font-semibold capitalize text-lg">
+                    {dest.name}
+                  </span>
                   {isExpanded ? (
-                    <BiMinus
-                      className="text-white text-xl rounded-full bg-primary-green p-1"
-                      
-                    />
+                    <BiMinus className="text-white text-xl rounded-full bg-primary-green p-1" />
                   ) : (
-                    <BiPlus
-                      className="text-white text-xl rounded-full bg-primary-green p-1"
-                    />
+                    <BiPlus className="text-white text-xl rounded-full bg-primary-green p-1" />
                   )}
                 </div>
 
@@ -65,11 +66,13 @@ export default function DestinationsSection({ data }: { data: Destination[] }) {
                     >
                       <p className="text-gray-500">{dest.description}</p>
                       <div className="w-full aspect-[16/9] h-[250px] rounded-lg relative">
-                        <Image
+                        <ImageWithFallback
                           src={`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${dest.imageUrl}`}
                           alt={dest.name}
                           fill
                           className="rounded-lg object-cover"
+                          wrapperClassName="rounded-lg"
+                          sizes="(min-width: 640px) 50vw, 100vw"
                         />
                       </div>
                     </motion.div>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { getAdventuresService } from "@/features/adventure/service/adventureService";
 import AdventureCard from "@/features/adventure/ui/AdventureCard";
+import AdventuresSkeleton from "@/components/skeletons/AdventuresSkeleton";
 
 export default function Adventures() {
   const [data, setData] = useState<any[]>([]);
@@ -26,13 +27,7 @@ export default function Adventures() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="min-h-[50vh] flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-xl font-semibold">Loading adventures...</div>
-        </div>
-      </div>
-    );
+    return <AdventuresSkeleton />;
   }
 
   if (error) {

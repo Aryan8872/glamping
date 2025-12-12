@@ -7,6 +7,10 @@ import ExperienceCategories from "@/features/experience/ui/ExperienceCategories"
 import FeaturedHosts from "@/features/host/ui/FeaturedHosts";
 import Testimonials from "@/features/testimonial/ui/Testimonials";
 import HomeClientContent from "./components/HomeClientContent";
+import ExperiencesSkeleton from "@/components/skeletons/ExperiencesSkeleton";
+import AdventuresSkeleton from "@/components/skeletons/AdventuresSkeleton";
+import FeaturedHostsSkeleton from "@/components/skeletons/FeaturedHostsSkeleton";
+import TestimonialsSkeleton from "@/components/skeletons/TestimonialsSkeleton";
 
 export const dynamic = "force-dynamic";
 
@@ -15,49 +19,25 @@ export default function Home() {
     <div className="font-sans">
       <CampingHero />
 
-      <Suspense
-        fallback={
-          <div className="h-48 bg-gray-50 flex items-center justify-center">
-            Loading Experiences...
-          </div>
-        }
-      >
+      <Suspense fallback={<ExperiencesSkeleton />}>
         <ExperienceCategories />
       </Suspense>
 
       <HomeClientContent />
 
-      <Suspense
-        fallback={
-          <div className="h-48 bg-gray-50 flex items-center justify-center">
-            Loading Adventures...
-          </div>
-        }
-      >
+      <Suspense fallback={<AdventuresSkeleton />}>
         <Adventures />
       </Suspense>
 
       <Story />
 
-      <HowItWorks />
+      {/* <HowItWorks /> */}
 
-      <Suspense
-        fallback={
-          <div className="h-48 bg-gray-50 flex items-center justify-center">
-            Loading Hosts...
-          </div>
-        }
-      >
+      <Suspense fallback={<FeaturedHostsSkeleton />}>
         <FeaturedHosts />
       </Suspense>
 
-      <Suspense
-        fallback={
-          <div className="h-48 bg-gray-50 flex items-center justify-center">
-            Loading Testimonials...
-          </div>
-        }
-      >
+      <Suspense fallback={<TestimonialsSkeleton />}>
         <Testimonials />
       </Suspense>
     </div>

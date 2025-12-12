@@ -2,10 +2,11 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { IoArrowBack, IoArrowForward } from "react-icons/io5";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 
 interface ImageSliderProps {
   images: string[];
-  id:number;
+  id: number;
   sliderClassname?: string;
   imageClassname?: string;
 }
@@ -17,7 +18,7 @@ const ImageSlider = ({
   imageClassname,
 }: ImageSliderProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const router = useRouter()
+  const router = useRouter();
   const next = () => {
     setCurrentSlide((currentSlide + 1) % images.length);
   };
@@ -29,17 +30,19 @@ const ImageSlider = ({
       className={`relative group ${sliderClassname} overflow-hidden rounded-lg`}
     >
       <div
-      onClick={() => router.push(`/camp/${id}`)}
+        onClick={() => router.push(`/camp/${id}`)}
         className="flex transition-transform duration-500 ease-in-out"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
       >
         {images.map((image, index) => (
           <div key={index} className={`relative min-w-full ${imageClassname}`}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <ImageWithFallback
               src={image}
               alt={`sliderImage ${index}`}
               className="w-full h-full object-cover rounded-2xl"
+              wrapperClassName="w-full h-full rounded-2xl"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
         ))}

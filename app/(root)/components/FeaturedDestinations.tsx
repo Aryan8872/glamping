@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Image from "next/image";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -155,10 +155,13 @@ export default function FeaturedDestinations() {
             }}
             className="spotlight-img absolute top-[-40%]  left-[50%] w-full lg:w-[30vw] aspect-[7/5] rounded-lg translate-x-[-50%] translate-y-[200%] will-change-transform overflow-hidden shadow-2xl z-10"
           >
-            <img
+            <ImageWithFallback
               src={dest.image}
               alt={dest.name}
               className="w-full h-full object-cover"
+              wrapperClassName="w-full h-full"
+              fill
+              sizes="(min-width: 1024px) 30vw, 100vw"
             />
           </div>
         ))}
