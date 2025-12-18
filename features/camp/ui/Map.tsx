@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { Camp } from "@/features/camp/types/CampTypes";
+import { buildImageUrl, buildUrl } from "@/lib/http/http";
 
 // Dynamically import the map component with no SSR
 const LeafletMap = dynamic(() => import("./LeafletMap"), {
@@ -25,9 +26,7 @@ export default function Map({ camps }: { camps: Camp[] }) {
           longitude: c.longitude!,
           title: c.name,
           price: c.pricePerNight,
-          image: c.images?.[0]
-            ? `${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${c.images[0]}`
-            : undefined,
+          image: c.images?.[0] ? buildImageUrl(c.images[0]) : undefined,
         })),
     [camps]
   );

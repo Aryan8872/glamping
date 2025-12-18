@@ -11,7 +11,6 @@ interface OptionsDropdownProps {
 
 export default function OptionsDropdown({ options }: { options: OptionsDropdownProps[] }) {
     const [open, setOpen] = useState(false);
-    console.log(options)
     return (
         <div className="relative">
             <div  onClick={() => setOpen(!open)} className="bg-gray-800 relative text-white flex flex-row gap-3 cursor-pointer items-center text-black px-3 py-2 rounded-md">

@@ -39,7 +39,6 @@ export async function apiSearchCamps(filters: SearchFilters) {
     const res = await HttpGet(`campsite/search?${params.toString()}`, {
 
     });
-    console.log(res)
 
     return res as Promise<PaginatedResponse<Camp>>;
 

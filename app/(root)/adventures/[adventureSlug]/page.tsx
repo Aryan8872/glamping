@@ -2,6 +2,7 @@ import React from "react";
 import { FiMessageCircle } from "react-icons/fi";
 import Card from "../../../../features/camp/ui/Card";
 import { getAdventureBySlug } from "@/features/adventure/service/adventureService";
+import { buildImageUrl, buildUrl } from "@/lib/http/http";
 
 const page = async ({
   params,
@@ -16,7 +17,9 @@ const page = async ({
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url(${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${adventureData.bannerImage})`,
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url(${buildImageUrl(
+              adventureData.bannerImage
+            )})`,
           }}
         />
 

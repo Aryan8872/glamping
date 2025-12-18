@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Experience } from "../types/ExperienceTypes";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { buildImageUrl, buildUrl } from "@/lib/http/http";
 
 interface ExperienceListProps {
   experiences: Experience[];
@@ -75,12 +76,7 @@ export default function ExperienceList({
                   wrapperClassName="h-full w-full aspect-[2/2] xl:aspect-[2/3]"
                   src={
                     exp.imageUrl
-                      ? `${
-                          process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL ||
-                          "http://localhost:8080"
-                        }${exp.imageUrl.startsWith("/") ? "" : "/"}${
-                          exp.imageUrl
-                        }`
+                      ? buildImageUrl(exp.imageUrl)
                       : "https://images.unsplash.com/photo-1504280390367-361c6d9838f4?q=80&w=800&auto=format&fit=crop"
                   }
                   alt={exp.title}
@@ -94,7 +90,7 @@ export default function ExperienceList({
                       {exp.title}
                     </div>
                     {exp.description && (
-                      <div className="hidden sm:block opacity-0  group-hover:opacity-100 wrap-anywhere transition-all duration-200 ease-in-out text-sm mt-3 text-[#8ba1ab]">
+                      <div className="hidden sm:block opacity-0 line-clamp-4  group-hover:opacity-100 wrap-anywhere transition-all duration-200 ease-in-out text-sm mt-3 text-[#8ba1ab]">
                         {exp.description}
                       </div>
                     )}

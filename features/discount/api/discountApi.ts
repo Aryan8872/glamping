@@ -1,8 +1,9 @@
 import { DiscountOffer } from "../types/discountTypes";
+import { buildUrl } from "@/lib/http/http";
 
 export const fetchActiveDiscount = async (): Promise<DiscountOffer | null> => {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}/discount/featured`);
+        const res = await fetch(buildUrl("discount/featured"));
         if (!res.ok) throw new Error("Failed to fetch featured discount");
 
         const json = await res.json();

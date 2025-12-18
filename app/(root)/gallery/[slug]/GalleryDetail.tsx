@@ -2,6 +2,9 @@
 
 import { getGallerybySlug } from "@/lib/api/gallery";
 import { useEffect, useState } from "react";
+import GalleryDetailSkeleton from "@/components/skeletons/GalleryDetailSkeleton";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { buildImageUrl, buildUrl } from "@/lib/http/http";
 
 export default function GalleryDetail({ slug }: { slug: string }) {
   const [item, setItem] = useState<any>(null);
@@ -24,11 +27,7 @@ export default function GalleryDetail({ slug }: { slug: string }) {
   }, [slug]);
 
   if (loading) {
-    return (
-      <div className="mx-auto w-[92%] max-w-[1200px] py-16">
-        <h1 className="text-2xl font-semibold">Loading...</h1>
-      </div>
-    );
+    return <GalleryDetailSkeleton />;
   }
 
   if (!item) {
@@ -48,12 +47,19 @@ export default function GalleryDetail({ slug }: { slug: string }) {
         <p className="mt-2 text-gray-600">{item.description}</p>
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {item.images.map((src: string, i: number) => (
-            <img
+            <div
               key={i}
-              src={`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${src}`}
-              alt={`${item.title}-${i}`}
-              className="w-full h-64 object-cover rounded-xl"
-            />
+              className="relative w-full h-64 rounded-xl overflow-hidden"
+            >
+              <ImageWithFallback
+                src={buildImageUrl(src)}
+                alt={`${item.title}-${i}`}
+                className="w-full h-full object-cover"
+                wrapperClassName="w-full h-full"
+                fill
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              />
+            </div>
           ))}
         </div>
       </div>

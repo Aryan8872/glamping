@@ -7,6 +7,5 @@ export async function getAdventuresApi(): Promise<Adventure[]> {
 
 export async function getAdventureBySlugApi(slug:string): Promise<Adventure> {
     const res = await HttpGet(`adventure/slug/${slug}`)
-    console.log("adventure api slug", res)
     return res.data
 }

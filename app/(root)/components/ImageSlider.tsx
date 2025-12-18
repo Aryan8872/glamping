@@ -1,5 +1,4 @@
-"use client";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import React, { useState } from "react";
 import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
@@ -18,7 +17,6 @@ const ImageSlider = ({
   imageClassname,
 }: ImageSliderProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const router = useRouter();
   const next = () => {
     setCurrentSlide((currentSlide + 1) % images.length);
   };
@@ -29,8 +27,8 @@ const ImageSlider = ({
     <div
       className={`relative group ${sliderClassname} overflow-hidden rounded-lg`}
     >
-      <div
-        onClick={() => router.push(`/camp/${id}`)}
+      <Link
+        href={`/camp/${id}`}
         className="flex transition-transform duration-500 ease-in-out"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
       >
@@ -46,7 +44,7 @@ const ImageSlider = ({
             />
           </div>
         ))}
-      </div>
+      </Link>
       <button
         onClick={previous}
         className={`${

@@ -7,20 +7,17 @@ import ImageSlider from "../../../app/(root)/components/ImageSlider";
 import { Camp } from "@/features/camp/types/CampTypes";
 import { IoLocation } from "react-icons/io5";
 import { BsPeople } from "react-icons/bs";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { buildImageUrl, buildUrl } from "@/lib/http/http";
 
 const Card = ({ camp }: { camp: Camp }) => {
-  const router = useRouter();
   return (
     <div className="grid cursor-pointer grid-rows-[1fr_auto] gap-3 mb-2  ">
       <div className="relative w-full border border-gray-200 shadow-sm rounded-2xl">
         {/* <Image fill src="/site1.webp" alt="camping site" className='rounded-lg'/> */}
         <ImageSlider
           id={camp.id}
-          images={camp.images.map(
-            (image) =>
-              `${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${image}`
-          )}
+          images={camp.images.map((image) => buildImageUrl(image))}
           sliderClassname=""
           imageClassname="aspect-[2/2.5] rounded-2xl"
         />
@@ -32,10 +29,7 @@ const Card = ({ camp }: { camp: Camp }) => {
             </div>
           )} */}
       </div>
-      <div
-        onClick={() => router.push(`/camp/${camp.id}`)}
-        className="w-full flex flex-col gap-2"
-      >
+      <Link href={`/camp/${camp.id}`} className="w-full flex flex-col gap-2">
         <div className="flex flex-row justify-between">
           <span className="font-semibold capitalize ">{camp.name} </span>
           {/* <span className="md:block hidden font-medium">
@@ -78,7 +72,7 @@ const Card = ({ camp }: { camp: Camp }) => {
           <FaStar className="text-yellow-500 text-[13px]" />
           <span>4.5 (200 reviews)</span>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { buildImageUrl, buildUrl } from "@/lib/http/http";
 
 export default function CampDetailImageGrid({ images }: { images: string[] }) {
   return (
@@ -9,7 +10,7 @@ export default function CampDetailImageGrid({ images }: { images: string[] }) {
       >
         <ImageWithFallback
           fill
-          src={`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${images[0]}`}
+          src={buildImageUrl(images[0])}
           alt={images[0]}
           className="absolute inset-0 h-full w-full object-cover rounded-2xl"
           wrapperClassName="absolute inset-0 rounded-2xl"
@@ -29,7 +30,7 @@ export default function CampDetailImageGrid({ images }: { images: string[] }) {
           >
             <ImageWithFallback
               fill
-              src={`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${image}`}
+              src={buildImageUrl(image)}
               alt={`${images[0]} - Image ${index + 2}`}
               className="absolute inset-0 h-full w-full cursor-pointer rounded-2xl object-cover"
               wrapperClassName="absolute inset-0 rounded-2xl"

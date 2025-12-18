@@ -3,7 +3,7 @@ import { contactUsSchema } from "../validators/contactUsSchema"
 import { ContactUsType } from "@/types/ContactUsType"
 
 export const getContactUs=async ():Promise<ContactUsType> =>{
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/contact/all`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_PATH}/contact`,{
         method:"GET",
         headers:{Accept:"application/json"},
         next:{
@@ -16,7 +16,6 @@ export const getContactUs=async ():Promise<ContactUsType> =>{
     }
 
     const json = await res.json()
-    console.log(json)
     const responseSchema = z.object({
         message:z.string(),
         data:contactUsSchema

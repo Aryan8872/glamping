@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { notFound } from "next/navigation";
 import { apiGetCampById } from "@/features/camp/api/campApi";
 import CampDetail from "@/features/camp/ui/CampDetail";
+import CampDetailSkeleton from "@/components/skeletons/CampDetailSkeleton";
 
 export default function CampPage() {
   const params = useParams();
@@ -35,7 +36,7 @@ export default function CampPage() {
   }, [params.id]);
 
   if (loading) {
-    return <div className="p-8 text-center">Loading camp details...</div>;
+    return <CampDetailSkeleton />;
   }
 
   if (error || !campData) {

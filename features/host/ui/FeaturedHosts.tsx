@@ -6,6 +6,7 @@ import { apiGetFeaturedHosts } from "../api/hostApi";
 import { FaStar, FaMedal } from "react-icons/fa";
 import { Host } from "../types/HostTypes";
 import FeaturedHostsSkeleton from "@/components/skeletons/FeaturedHostsSkeleton";
+import { buildImageUrl, buildUrl } from "@/lib/http/http";
 
 export default function FeaturedHosts() {
   const [hosts, setHosts] = useState<Host[]>([]);
@@ -35,7 +36,7 @@ export default function FeaturedHosts() {
   }
 
   return (
-    <section className="py-16 bg-white border-t border-gray-100">
+    <section className="py-16 bg-white border-t px-3 md:px-9 border-gray-100">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900">
@@ -56,9 +57,7 @@ export default function FeaturedHosts() {
                 <Image
                   src={
                     host.profilePicture
-                      ? `${
-                          process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL
-                        }/${host.profilePicture.replace(/\\/g, "/")}`
+                      ? buildImageUrl(host.profilePicture.replace(/\\/g, "/"))
                       : "/placeholder-avatar.jpg"
                   }
                   alt={host.fullName}

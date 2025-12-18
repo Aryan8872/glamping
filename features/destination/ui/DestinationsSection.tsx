@@ -5,6 +5,7 @@ import { BiMinus, BiPlus } from "react-icons/bi";
 import { Destination } from "../types/DestinationTypes";
 import { motion, AnimatePresence } from "framer-motion";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { buildImageUrl, buildUrl } from "@/lib/http/http";
 
 export default function DestinationsSection({ data }: { data: Destination[] }) {
   const [expandedId, setExpandedId] = useState<number | null>(null);
@@ -67,7 +68,9 @@ export default function DestinationsSection({ data }: { data: Destination[] }) {
                       <p className="text-gray-500">{dest.description}</p>
                       <div className="w-full aspect-[16/9] h-[250px] rounded-lg relative">
                         <ImageWithFallback
-                          src={`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${dest.imageUrl}`}
+                          src={
+                            dest.imageUrl ? buildImageUrl(dest.imageUrl) : ""
+                          }
                           alt={dest.name}
                           fill
                           className="rounded-lg object-cover"

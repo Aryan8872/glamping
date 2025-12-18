@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Adventure } from "../types/adventureTypes";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { buildImageUrl, buildUrl } from "@/lib/http/http";
 export default function AdventureCard({ data }: { data: Adventure[] }) {
   const stagger = (delay = 0.1) => ({
     hidden: {},
@@ -68,7 +69,7 @@ export default function AdventureCard({ data }: { data: Adventure[] }) {
                 <ImageWithFallback
                   className="h-full w-full object-cover brightness-90 rounded-2xl"
                   wrapperClassName="h-full w-full aspect-[2/2] xl:aspect-[2/3] rounded-2xl"
-                  src={`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${adventure.coverImage}`}
+                  src={buildImageUrl(adventure.coverImage)}
                   alt={adventure.name}
                   fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"

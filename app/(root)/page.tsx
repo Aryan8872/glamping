@@ -33,13 +33,13 @@ export default function Home() {
 
       {/* <HowItWorks /> */}
 
-      <Suspense fallback={<FeaturedHostsSkeleton />}>
+      {/* <Suspense fallback={<FeaturedHostsSkeleton />}>
         <FeaturedHosts />
-      </Suspense>
+      </Suspense> */}
 
-      <Suspense fallback={<TestimonialsSkeleton />}>
+      {/* <Suspense fallback={<TestimonialsSkeleton />}>
         <Testimonials />
-      </Suspense>
+      </Suspense> */}
     </div>
   );
 }

@@ -27,6 +27,8 @@ const LeafletMap = dynamic(() => import("./LeafletMap"), {
   ),
 });
 
+import { buildImageUrl, buildUrl } from "@/lib/http/http";
+
 // --- Types & Reducer ---
 
 type ModalType = "date" | "guest" | null;
@@ -200,7 +202,7 @@ export default function CampDetail({ campData }: { campData: Camp }) {
                       title: campData.name,
                       price: campData.pricePerNight,
                       image: campData.images?.[0]
-                        ? `${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${campData.images[0]}`
+                        ? buildImageUrl(campData.images[0])
                         : undefined,
                     },
                   ]}

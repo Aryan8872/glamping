@@ -22,7 +22,10 @@ export function ImageWithFallback({
   ...props
 }: ImageWithFallbackProps) {
   const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+
+  // Validate src immediately
+  const isValidSrc = src && typeof src === "string" && src.trim() !== "";
+  const [hasError, setHasError] = useState(!isValidSrc); // Start as error if src is invalid
 
   const defaultFallback = (
     <div className="absolute inset-0 flex items-center justify-center bg-gray-200">

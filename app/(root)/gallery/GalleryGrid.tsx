@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { GalleryItem } from "@/types/GalleryTypes";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { buildImageUrl, buildUrl } from "@/lib/http/http";
 
 const gridContainerVariants = {
   hidden: { opacity: 0 },
@@ -38,14 +39,18 @@ const GalleryGrid = ({ galleryData }: { galleryData: GalleryItem[] }) => {
           <Link
             href={`/gallery/${gallery.slug}`}
             key={gallery.slug}
-            className="group relative h-[87%] overflow-hidden rounded-md"
+            className="group relative h-[400px] w-full overflow-hidden rounded-md"
           >
             <motion.div
               variants={gridSquareVariants}
               className="relative h-full rounded-md"
             >
               <ImageWithFallback
-                src={`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${gallery.coverImage}`}
+                src={
+                  gallery.coverImage
+                    ? buildImageUrl(gallery.coverImage)
+                    : "/placeholder.jpg"
+                }
                 alt={gallery.title}
                 className="h-full w-full object-cover rounded-md"
                 wrapperClassName="h-full w-full rounded-md"

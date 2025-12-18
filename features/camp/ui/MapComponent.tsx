@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Camp } from "@/features/camp/types/CampTypes";
+import { buildImageUrl, buildUrl } from "@/lib/http/http";
 
 // ---------------------------------------------------------
 //  Marker Icon Configuration
@@ -108,7 +109,7 @@ export default function MapComponent({ camps }: { camps: Camp[] }) {
                 {camp.images && camp.images[0] && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={`${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${camp.images[0]}`}
+                    src={buildImageUrl(camp.images[0])}
                     alt={camp.name}
                     className="w-full h-28 object-cover rounded-md mb-2"
                   />

@@ -15,14 +15,24 @@ function delay(ms: number) {
 }
 
 // -------------------------------
-// 🔵 INTERNAL: Build full URL
+// 🔵 INTERNAL: Build full URL (API)
 // -------------------------------
-function buildUrl(path: string) {
+export function buildUrl(path: string) {
     const url = path.startsWith("http")
         ? path
         : `${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}/${path}`;
-    console.log(url)
+    // console.log(url)
     return url
+}
+
+// -------------------------------
+// 🔵 INTERNAL: Build Image URL
+// -------------------------------
+export function buildImageUrl(path: string | undefined | null) {
+    if (!path) return "";
+    return path.startsWith("http") || path.startsWith("blob:")
+        ? path
+        : `${process.env.NEXT_PUBLIC_RESOLVED_API_BASE_URL}${path}`;
 }
 
 // -------------------------------
