@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Camp } from "@/features/camp/types/CampTypes";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
-import { buildImageUrl, buildUrl } from "@/lib/http/http";
+import { buildImageUrl } from "@/lib/http/http";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -19,7 +19,7 @@ export default function StoryContent({ featuredCamp }: { featuredCamp: Camp }) {
   if (!featuredCamp) return null;
 
   return (
-    <section className="bg-white py-14">
+    <section className="bg-white py-14 px-3 md:px-9">
       <div className="w-full grid lg:grid-cols-[1.1fr_.9fr] gap-8 items-center">
         <motion.div
           initial="hidden"

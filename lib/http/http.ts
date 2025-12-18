@@ -62,7 +62,7 @@ export async function HttpGet(
     let url = buildUrl(path); // Allow modification for retry
     const controller = new AbortController();
     const timeout = opts?.timeout ?? 10000;
-    const maxRetries = Math.min(opts?.retries ?? 1, 3);
+    const maxRetries = Math.min(opts?.retries ?? 3, 5);
 
     const timer = setTimeout(() => controller.abort(), timeout);
 
