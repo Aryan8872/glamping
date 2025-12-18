@@ -4,15 +4,21 @@ import Link from "next/link";
 import { Adventure } from "../types/adventureTypes";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { buildImageUrl } from "@/lib/http/http";
-import  styles from "./adventure.module.css";
+import styles from "./adventure.module.css";
 export default function AdventureCard({ data }: { data: Adventure[] }) {
   const stagger = (delay = 0.1) => ({
     hidden: {},
     visible: { transition: { staggerChildren: 0.1, delayChildren: delay } },
   });
+  const sharedTransition = {
+    type: "spring" as const,
+    stiffness: 300,
+    damping: 30,
+    mass: 1,
+  };
   const fadeInUp = {
     hidden: { opacity: 0, y: 24 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+    visible: { opacity: 1, y: 0, transition: sharedTransition },
   };
 
   return (
@@ -57,8 +63,7 @@ export default function AdventureCard({ data }: { data: Adventure[] }) {
               whileHover={{
                 y: -7,
                 scale: 1.01,
-                boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
-                transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+                transition: { duration: 0.2, ease: "easeOut" },
               }}
               className="group snap-center w-[70vw] shrink-0 sm:w-auto relative min-h-[280px] overflow-hidden  rounded-2xl border border-white/10 bg-[#11171b] cursor-pointer transform-gpu"
               style={{ willChange: "transform" }}

@@ -63,9 +63,8 @@ export default function ExperienceList({
               variants={fadeInUp}
               whileHover={{
                 y: -10,
-                scale: 1.05,
-                boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
-                transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+                scale: 1.02,
+                transition: { duration: 0.2, ease: "easeOut" },
               }}
               className="group relative snap-center shrink-0 w-[70vw] sm:w-auto min-h-[280px] overflow-hidden rounded-2xl border border-white/10 bg-[#11171b] cursor-pointer transform-gpu"
               style={{ willChange: "transform" }}
