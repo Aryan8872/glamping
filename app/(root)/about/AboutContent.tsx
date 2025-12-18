@@ -3,8 +3,7 @@
 import { motion } from "framer-motion";
 import { BsQuote } from "react-icons/bs";
 import { FiTarget } from "react-icons/fi";
-import { BiCompass, BiHeart, BiTrendingUp, BiShield } from "react-icons/bi";
-import { FaUsers } from "react-icons/fa";
+import { BiCompass } from "react-icons/bi";
 import { getIconComponent } from "@/utils/getIcons";
 
 const fadeInUp = {
@@ -28,7 +27,7 @@ const scaleIn = {
 };
 
 export default function AboutContent({ aboutData }: { aboutData: any }) {
-  const coreValues = aboutData?.coreValues;
+  const coreValues = aboutData?.coreValues || [];
   return (
     <section className="mx-auto md:w-[92%] max-w-[1200px]">
       <motion.div
@@ -76,7 +75,7 @@ export default function AboutContent({ aboutData }: { aboutData: any }) {
                     }}
                   >
                     <h2
-                    className="lg:text-[92px] text-[30px]"
+                      className="lg:text-[92px] text-[30px]"
                       style={{
                         lineHeight: 1,
                         margin: 0,

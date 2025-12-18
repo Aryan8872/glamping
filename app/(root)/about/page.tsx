@@ -7,6 +7,9 @@ export default async function About() {
   let aboutData;
   try {
     aboutData = await getAboutUs();
+    if (!aboutData) {
+      aboutData = {};
+    }
   } catch (error) {
     console.error("Failed to fetch About Us data:", error);
     // Add fallback data just in case
