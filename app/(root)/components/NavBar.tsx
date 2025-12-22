@@ -37,8 +37,8 @@ export default function NavBar() {
             >
               <Image src="/logo.svg" alt="Logo" width={80} height={80} />
               <p className="flex flex-col gap-2">
-                <span className="text-primary-green">CAMPORA</span>
-                <span className="text-primary-green text-sm">
+                <span className="hidden sm:block text-primary-green">CAMPORA</span>
+                <span className="hidden sm:block text-primary-green text-sm">
                   Himalayan escapes
                 </span>
               </p>
@@ -118,8 +118,8 @@ export default function NavBar() {
         >
           <Image src="/logo.svg" alt="Logo" width={70} height={70} />
           <p className="flex flex-col gap-2">
-            <span className="text-primary-green">CAMPORA</span>
-            <span className="text-primary-green text-sm">
+            <span className="hidden sm:block text-primary-green">CAMPORA</span>
+            <span className="hidden sm:block text-primary-green text-sm">
               Himalayan escapes
             </span>
           </p>
