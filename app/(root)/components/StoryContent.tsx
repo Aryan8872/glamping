@@ -19,7 +19,7 @@ export default function StoryContent({ featuredCamp }: { featuredCamp: Camp }) {
   if (!featuredCamp) return null;
 
   return (
-    <section className="bg-white py-14 px-3 md:px-9">
+    <section className="bg-white py-10 sm:py-10">
       <div className="w-full grid lg:grid-cols-[1.1fr_.9fr] gap-8 items-center">
         <motion.div
           initial="hidden"

@@ -140,7 +140,7 @@ export function PopularRegionsExpandable({ data }: { data: Destination[] }) {
         ) : null}
       </AnimatePresence>
 
-      <section className="w-full bg-white dark:bg-neutral-950 py-20">
+      <section className="w-full bg-white dark:bg-neutral-950 py-5 sm:py-10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             {/* Left Content */}

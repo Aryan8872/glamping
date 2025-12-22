@@ -33,9 +33,5 @@ export default function ExperienceCategories() {
     return null;
   }
 
-  return (
-    <section>
-      <ExperienceList experiences={experiences} />
-    </section>
-  );
+  return <ExperienceList experiences={experiences} />;
 }

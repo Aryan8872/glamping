@@ -24,7 +24,7 @@ export default function AdventureCard({ data }: { data: Adventure[] }) {
   return (
     <section
       id="tours"
-      className="relative min-h-[60vh] px-3 md:px-9 py-10 sm:py-20 bg-white"
+      className="relative min-h-[60vh] py-10 sm:py-10 bg-white"
       style={{ contentVisibility: "auto", containIntrinsicSize: "800px" }}
     >
       <div className="w-full">
