@@ -137,7 +137,7 @@ export default function CompactSearch() {
         <div className="p-1 col-span-1 sm:col-span-2 xl:col-span-1">
           <button
             onClick={handleSearch}
-            className="w-full h-full px-2 min-h-[56px] bg-indigo-500 hover:bg-indigo-600 text-white font-bold text-lg rounded-lg transition-all shadow-lg hover:shadow-indigo-500/30 flex items-center justify-center gap-2"
+            className="w-full h-full px-2 min-h-[56px] bg-primary-green hover:bg-primary-green/80 text-white font-bold text-lg rounded-lg transition-all shadow-lg hover:shadow-indigo-500/30 flex items-center justify-center gap-2"
           >
             Search 
           </button>

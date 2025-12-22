@@ -22,7 +22,7 @@ export default function CampingHero() {
           {/* Left Side: Title + Search */}
           <div className="flex flex-col gap-8 text-left">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white drop-shadow-lg tracking-tight leading-tight">
-              Find your adventure with Campanyon
+              Find your adventure with Campora
             </h1>
 
             <div className="w-full">

@@ -145,7 +145,7 @@ export function PopularRegionsExpandable({ data }: { data: Destination[] }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             {/* Left Content */}
             <div className="flex flex-col gap-6 lg:sticky lg:top-24">
-              <h2 className="text-5xl font-bold text-neutral-900 dark:text-white leading-tight">
+              <h2 className="text-2xl sm:text-3xl font-bold uppercase text-black  dark:text-white leading-tight">
                 We Spotted Our <br />
                 <span className="text-primary-green">
                   Popular Locations

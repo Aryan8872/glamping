@@ -40,7 +40,7 @@ export default function HeroDiscountSection() {
         <div className="flex flex-col gap-3 w-full mt-4">
           <button
             onClick={() => (window.location.href = "/search")}
-            className="w-full bg-indigo-400/90 hover:bg-indigo-400 text-indigo-950 font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-colors text-center text-sm sm:text-base"
+            className="w-full bg-primary-green/90 hover:bg-primary-green text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-colors text-center text-sm sm:text-base"
           >
             Explore All Camps
           </button>
@@ -69,7 +69,7 @@ export default function HeroDiscountSection() {
       <div className="flex flex-col gap-3 w-full mt-4">
         <button
           onClick={() => (window.location.href = "/adventures")}
-          className="w-full bg-indigo-400/90 hover:bg-indigo-400 text-indigo-950 font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-colors text-center text-sm sm:text-base"
+          className="w-full bg-primary-green hover:bg-primary-green/80 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-colors text-center text-sm sm:text-base"
         >
           Explore {discount.title} adventures
         </button>
