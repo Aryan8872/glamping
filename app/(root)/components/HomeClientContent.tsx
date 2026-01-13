@@ -26,5 +26,7 @@ export default function HomeClientContent() {
 
   if (loading) return <DestinationsSkeleton />;
 
+  if (!destinationData || destinationData.length === 0) return null;
+
   return <PopularRegionsExpandable data={destinationData} />;
 }

@@ -29,6 +29,9 @@ export default function Adventures() {
   if (loading) {
     return <AdventuresSkeleton />;
   }
+  if (!data || data.length === 0) {
+    return null;
+  }
 
   if (error) {
     return (
