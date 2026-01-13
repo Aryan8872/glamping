@@ -36,7 +36,7 @@ export default function FilterModal({
   return (
     <div
       ref={ref}
-      className={`absolute top-full mt-2 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 animate-in fade-in zoom-in-95 duration-200 p-5 min-w-[300px]
+      className={`absolute top-0 mt-0 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 animate-in fade-in zoom-in-95 duration-200 p-5 min-w-[300px]
         ${position === "right" ? "right-0" : "left-0"}
         ${className}
       `}

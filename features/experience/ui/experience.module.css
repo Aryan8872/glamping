@@ -6,3 +6,12 @@
     display: none;
 }
 
+.gpuCard {
+  will-change: transform, opacity;
+  transform: translateZ(0) translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  contain: layout style paint;
+  isolation: isolate;
+}
+

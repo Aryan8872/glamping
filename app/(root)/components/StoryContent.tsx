@@ -1,19 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { Camp } from "@/features/camp/types/CampTypes";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { buildImageUrl } from "@/lib/http/http";
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
-const stagger = (delay = 0.08) => ({
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12, delayChildren: delay } },
-});
+import styles from "./story.module.css";
 
 export default function StoryContent({ featuredCamp }: { featuredCamp: Camp }) {
   if (!featuredCamp) return null;
@@ -21,53 +12,32 @@ export default function StoryContent({ featuredCamp }: { featuredCamp: Camp }) {
   return (
     <section className="bg-white py-10 sm:py-10">
       <div className="w-full grid lg:grid-cols-[1.1fr_.9fr] gap-8 items-center">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={stagger(0.05)}
-        >
-          <motion.h3
-            variants={fadeInUp}
-            className="text-[.9rem] uppercase tracking-[.3em] text-gray-500"
-          >
+        <div>
+          <h3 className="text-[.9rem] uppercase tracking-[.3em] text-gray-500">
             Featured
-          </motion.h3>
-          <motion.h2
-            variants={fadeInUp}
-            className="mt-2 text-3xl sm:text-4xl font-extrabold"
-          >
+          </h3>
+          <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold">
             {featuredCamp.name}
-          </motion.h2>
-          <motion.p
-            variants={fadeInUp}
-            className="mt-3 text-gray-600 max-w-[60ch]"
-          >
+          </h2>
+          <p className="mt-3 text-gray-600 max-w-[60ch]">
             {featuredCamp.description?.slice(0, 150)}...
-          </motion.p>
-          <motion.div variants={fadeInUp} className="mt-6 flex gap-3">
+          </p>
+          <div className="mt-6 flex gap-3">
             <Link href={`/camp/${featuredCamp.id}`}>
               <button className="rounded-xl bg-emerald-600 px-5 py-3 text-white font-semibold hover:bg-emerald-700">
                 Book
               </button>
             </Link>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={stagger(0.05)}
-          className="grid grid-cols-2 sm:grid-cols-3 gap-3"
-        >
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {(featuredCamp.images || []).slice(0, 4).map((src, i) => (
-            <motion.div
+            <div
               key={i}
-              variants={fadeInUp}
               className={`overflow-hidden rounded-xl ${
                 i === 0 ? "col-span-2 row-span-2 aspect-4/3" : "aspect-4/3"
-              }`}
+              } ${styles.gpuCard}`}
             >
               <ImageWithFallback
                 className="h-full w-full object-cover"
@@ -76,14 +46,13 @@ export default function StoryContent({ featuredCamp }: { featuredCamp: Camp }) {
                 alt="story"
                 fill
                 sizes="(min-width: 1024px) 33vw, 50vw"
+                loading="eager"
+                priority
               />
-            </motion.div>
+            </div>
           ))}
           {featuredCamp.campHost && (
-            <motion.div
-              variants={fadeInUp}
-              className="col-span-2 sm:col-span-3 mt-2 flex items-center gap-3 rounded-xl border border-black/10 bg-white p-3 shadow-sm"
-            >
+            <div className="col-span-2 sm:col-span-3 mt-2 flex items-center gap-3 rounded-xl border border-black/10 bg-white p-3 shadow-sm">
               <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600">
                 {featuredCamp.campHost.fullName?.charAt(0) || "H"}
               </div>
@@ -93,9 +62,9 @@ export default function StoryContent({ featuredCamp }: { featuredCamp: Camp }) {
                 </div>
                 <div className="text-gray-500">Adventure host</div>
               </div>
-            </motion.div>
+            </div>
           )}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

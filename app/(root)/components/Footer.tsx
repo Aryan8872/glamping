@@ -1,62 +1,119 @@
 "use client";
+import Link from "next/link";
+import Image from "next/image";
+import {
+  FaFacebookF,
+  FaLinkedinIn,
+  FaYoutube,
+  FaInstagram,
+} from "react-icons/fa";
+
+const FOOTER_LINKS = [
+  {
+    title: "Explore",
+    links: [
+      { label: "Home", href: "/" },
+      { label: "About Us", href: "/about" },
+      { label: "Gallery", href: "/gallery" },
+      { label: "Contact Us", href: "/contact" },
+    ],
+  },
+  {
+    title: "Support",
+    links: [
+      { label: "Help Center", href: "/contact" },
+      { label: "Safety Information", href: "/about" },
+      { label: "Cancellation Options", href: "/about" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About Us", href: "/about" },
+      { label: "Careers", href: "/contact" },
+      { label: "Privacy Policy", href: "/" },
+      { label: "Terms of Service", href: "/" },
+    ],
+  },
+];
+
+const SOCIAL_LINKS = [
+  { icon: FaFacebookF, href: "#" },
+  { icon: FaLinkedinIn, href: "#" },
+  { icon: FaYoutube, href: "#" },
+  { icon: FaInstagram, href: "#" },
+];
 
 export default function Footer() {
   return (
-    <footer className="bg-white border-t border-gray-200 text-black">
-      <div className="mx-auto w-[92%] max-w-[1200px] py-12">
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
-          <div>
-            <div className="text-black font-semibold mb-3">Our best tips</div>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-black hover:text-emerald-700">Romantic getaways</a></li>
-              <li><a href="#" className="text-black hover:text-emerald-700">Sustainable stays</a></li>
-              <li><a href="#" className="text-black hover:text-emerald-700">Workation</a></li>
-              <li><a href="#" className="text-black hover:text-emerald-700">Family friendly</a></li>
-            </ul>
-          </div>
-          <div>
-            <div className="text-black font-semibold mb-3">Explore different nature stays</div>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-black hover:text-emerald-700">Glamping sites</a></li>
-              <li><a href="#" className="text-black hover:text-emerald-700">Unique cabins</a></li>
-              <li><a href="#" className="text-black hover:text-emerald-700">Treehouses</a></li>
-              <li><a href="#" className="text-black hover:text-emerald-700">Camping domes & bubbles</a></li>
-            </ul>
-          </div>
-          <div>
-            <div className="text-black font-semibold mb-3">Where are you going?</div>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-black hover:text-emerald-700">Himalaya</a></li>
-              <li><a href="#" className="text-black hover:text-emerald-700">Lakeside</a></li>
-              <li><a href="#" className="text-black hover:text-emerald-700">Forests</a></li>
-              <li><a href="#" className="text-black hover:text-emerald-700">Rivers</a></li>
-            </ul>
-          </div>
-          <div>
-            <div className="text-black font-semibold mb-3">Discover</div>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-black hover:text-emerald-700">About us</a></li>
-              <li><a href="#" className="text-black hover:text-emerald-700">Help center</a></li>
-              <li><a href="#" className="text-black hover:text-emerald-700">Safety</a></li>
-              <li><a href="#" className="text-black hover:text-emerald-700">Become a host</a></li>
-            </ul>
-          </div>
-          <div className="sm:col-span-2 lg:col-span-1">
-            <div className="text-black font-semibold mb-3">Get our newsletter</div>
-            <div className="flex gap-2">
-              <input className="w-full rounded-xl border border-gray-300 bg-white px-3 py-2 outline-none text-black placeholder:text-gray-500" placeholder="Your email" />
-              <button className="rounded-xl bg-emerald-600 px-4 font-semibold text-white hover:bg-emerald-700">Join</button>
+    <footer className="bg-white border-t border-gray-100 pt-16 pb-8">
+      <div className="mx-auto w-[92%] max-w-[1200px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-12 mb-12">
+          {/* Brand Section */}
+          <div className="col-span-1 lg:col-span-2">
+            <Link href="/" className="flex items-center gap-2 mb-4">
+              <Image src="/logo.svg" alt="Campora" width={50} height={50} />
+              <div className="flex flex-col">
+                <span className="font-extrabold tracking-widest text-primary-green text-xl">
+                  CAMPORA
+                </span>
+                <span className="text-xs text-primary-green tracking-wide">
+                  Himalayan Escapes
+                </span>
+              </div>
+            </Link>
+            <p className="text-gray-500 text-sm leading-relaxed mb-6 max-w-sm">
+              Discover the most breathtaking camping destinations in the
+              Himalayas. Escape the ordinary and reconnect with nature.
+            </p>
+            <div className="flex gap-3">
+              {SOCIAL_LINKS.map((item, idx) => (
+                <a
+                  key={idx}
+                  href={item.href}
+                  className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 transition-all hover:bg-primary-green hover:text-white"
+                >
+                  <item.icon />
+                </a>
+              ))}
             </div>
           </div>
+
+          {/* Links Section */}
+          {FOOTER_LINKS.map((col, idx) => (
+            <div key={idx} className="col-span-1">
+              <h4 className="font-bold text-gray-900 mb-4">{col.title}</h4>
+              <ul className="space-y-3">
+                {col.links.map((link, lIdx) => (
+                  <li key={lIdx}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-gray-500 hover:text-primary-green transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-      </div>
-      <div className="border-t border-gray-200">
-        <div className="mx-auto w-[92%] max-w-[1200px] py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-sm text-black">© 2025 Glamping Himalayas • All rights reserved</div>
-          <div className="flex items-center gap-3">
-            {["f","in","▶","✈"].map((s)=> (
-              <a key={s} className="grid h-9 w-9 place-items-center rounded-full border border-gray-300 text-emerald-700 hover:text-emerald-800" href="#">{s}</a>
-            ))}
+
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-gray-500 text-center md:text-left">
+            © {new Date().getFullYear()} Campora. All rights reserved.
+          </p>
+          <div className="flex gap-6 text-sm text-gray-500">
+            <Link href="/" className="hover:text-primary-green">
+              Privacy
+            </Link>
+            <Link href="/" className="hover:text-primary-green">
+              Terms
+            </Link>
+            <Link href="/" className="hover:text-primary-green">
+              Sitemap
+            </Link>
           </div>
         </div>
       </div>

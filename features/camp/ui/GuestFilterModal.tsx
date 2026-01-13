@@ -14,6 +14,8 @@ interface GuestFilterModalProps {
   guests: GuestCounts;
   onChange: (type: keyof GuestCounts, delta: number) => void;
   className?: string; // Allow overriding styles/position if needed
+  maxPets?: number;
+  maxGuests?: number;
 }
 
 export default function GuestFilterModal({
@@ -21,6 +23,8 @@ export default function GuestFilterModal({
   guests,
   onChange,
   className = "w-72",
+  maxPets,
+  maxGuests,
 }: GuestFilterModalProps) {
   return (
     <FilterModal
@@ -29,7 +33,12 @@ export default function GuestFilterModal({
       position="right"
       className={className}
     >
-      <GuestFilterContent guests={guests} onChange={onChange} />
+      <GuestFilterContent
+        guests={guests}
+        onChange={onChange}
+        maxPets={maxPets}
+        maxGuests={maxGuests}
+      />
     </FilterModal>
   );
 }

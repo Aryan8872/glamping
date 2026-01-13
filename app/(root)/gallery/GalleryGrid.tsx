@@ -1,22 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { GalleryItem } from "@/types/GalleryTypes";
-import { ImageWithFallback } from "@/components/ImageWithFallback";
-import { buildImageUrl, buildUrl } from "@/lib/http/http";
-
-const gridContainerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.25, delayChildren: 0.45 },
-  },
-};
-
-const gridSquareVariants = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
+import GalleryCard from "@/features/gallery/ui/GalleryCard";
+import { gridContainerVariants } from "@/features/gallery/utils/galleryAnimations";
 
 const GalleryGrid = ({ galleryData }: { galleryData: GalleryItem[] }) => {
   return (
@@ -36,38 +22,7 @@ const GalleryGrid = ({ galleryData }: { galleryData: GalleryItem[] }) => {
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8"
       >
         {galleryData.map((gallery) => (
-          <Link
-            href={`/gallery/${gallery.slug}`}
-            key={gallery.slug}
-            className="group relative h-[400px] w-full overflow-hidden rounded-md"
-          >
-            <motion.div
-              variants={gridSquareVariants}
-              className="relative h-full rounded-md"
-            >
-              <ImageWithFallback
-                src={
-                  gallery.coverImage
-                    ? buildImageUrl(gallery.coverImage)
-                    : "/placeholder.jpg"
-                }
-                alt={gallery.title}
-                className="h-full w-full object-cover rounded-md"
-                wrapperClassName="h-full w-full rounded-md"
-                fill
-                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-80 rounded-md"></div>
-              <div className="absolute bottom-0 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all ease-out duration-500 w-full px-4 pb-6 text-center text-white">
-                <h3 className="text-lg font-bold uppercase tracking-wide mb-2">
-                  {gallery.title}
-                </h3>
-                <p className="text-sm opacity-90 leading-snug">
-                  {gallery.excerpt}
-                </p>
-              </div>
-            </motion.div>
-          </Link>
+          <GalleryCard key={gallery.slug} gallery={gallery} />
         ))}
       </motion.section>
     </>

@@ -1,45 +1,27 @@
 "use client";
 import { useDiscount } from "../service/discountService";
+import { useDiscountTimer } from "../hooks/useDiscountTimer";
 import { useEffect, useState } from "react";
 import { TimeLeft } from "../types/discountTypes";
 
 export default function DiscountBanner() {
   const { discount, loading } = useDiscount();
 
-  // Duplicate timer logic for now or extract to a hook if needed.
-  // Since the UI is different (inline), I'll keep it simple here or reuse the hook if I made one.
-  // I didn't make a hook for the timer logic, just the component.
-  // I'll quickly duplicate the calculation for this small banner to avoid over-engineering for now.
+  // We need to use the hook conditionally or handle null expiry inside the hook?
+  // React hooks cannot be conditional.
+  // So we must call it, but maybe pass a dummy date if discount is null?
+  // Or better, wrap the timer part in a sub-component or just handle null inside the hook (make hook robust).
 
-  const calculateTimeLeft = (expiry: string): TimeLeft => {
-    const difference = +new Date(expiry) - +new Date();
-    let timeLeft: TimeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-    }
-    return timeLeft;
-  };
+  // Let's modify the hook to accept string | undefined.
+  // Actually, checking the hook: UseDiscountTimer takes string.
+  // So I'll pass a future date or current date if null to avoid errors,
+  // but since we return null if !discount, the rendered output won't show valid time anyway.
 
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  // Actually, the best way for a small component like this is to split the content that needs the hook.
+  // But to keep it simple, let's just use the hook with a fallback and return null if discount is missing.
 
-  useEffect(() => {
-    if (!discount) return;
-    setTimeLeft(calculateTimeLeft(discount.expiryDate));
-    const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft(discount.expiryDate));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [discount]);
+  const expiryDate = discount?.expiryDate || new Date().toISOString();
+  const timeLeft = useDiscountTimer(expiryDate);
 
   if (loading || !discount) return null;
 

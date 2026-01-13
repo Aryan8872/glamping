@@ -37,7 +37,9 @@ export default function NavBar() {
             >
               <Image src="/logo.svg" alt="Logo" width={80} height={80} />
               <p className="flex flex-col gap-2">
-                <span className="hidden sm:block text-primary-green">CAMPORA</span>
+                <span className="hidden sm:block text-primary-green">
+                  CAMPORA
+                </span>
                 <span className="hidden sm:block text-primary-green text-sm">
                   Himalayan escapes
                 </span>
@@ -125,9 +127,7 @@ export default function NavBar() {
           </p>
         </Link>
         <nav
-          className={`hidden gap-7 text-sm font-semibold ${
-            prevScrollPos >= 800 ? "text-white" : "text-black"
-          } md:flex`}
+          className={`hidden gap-7 text-sm font-semibold text-black md:flex`}
         >
           {[
             { href: "/", label: "Home" },
