@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { FaStar } from "react-icons/fa";
+import { IoAlertCircleOutline } from "react-icons/io5";
 
 import { Camp } from "../../types/CampTypes";
 import FilterModal from "../FilterModal";
@@ -213,12 +214,65 @@ export default function BookingWidget({ campData }: { campData: Camp }) {
           />
         )}
 
+        {/* Availability Info */}
+        {dateRange?.from && dateRange?.to && (
+          <div className="mb-4">
+            {state.loadingAvailability ? (
+              <div className="flex items-center gap-2 text-xs text-gray-500 animate-pulse">
+                <div className="w-4 h-4 rounded-full border-2 border-gray-300 border-t-gray-600 animate-spin"></div>
+                Checking availability...
+              </div>
+            ) : state.availability ? (
+              (() => {
+                const requested = guests.adults + guests.children;
+                const minRemaining = Math.min(
+                  ...state.availability.map((d) => d.remainingSlots),
+                );
+                const isOverCapacity = minRemaining < requested;
+
+                return (
+                  <div
+                    className={`p-3 rounded-lg border flex flex-col gap-1 ${
+                      isOverCapacity
+                        ? "bg-red-50 border-red-200 text-red-700"
+                        : minRemaining <= 2
+                          ? "bg-yellow-50 border-yellow-200 text-yellow-700"
+                          : "bg-green-50 border-green-200 text-green-700"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase">
+                      <IoAlertCircleOutline size={16} />
+                      {isOverCapacity
+                        ? "Sold Out"
+                        : minRemaining <= 2
+                          ? "Limited Spots"
+                          : "Available"}
+                    </div>
+                    <p className="text-sm">
+                      {isOverCapacity
+                        ? `Not enough space for ${requested} guests on these dates.`
+                        : `Only ${minRemaining} slots remaining for your stay.`}
+                    </p>
+                  </div>
+                );
+              })()
+            ) : null}
+          </div>
+        )}
+
         <button
           onClick={handleContinue}
           className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3.5 rounded-xl mt-4 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
-          disabled={!dateRange?.from || !dateRange?.to}
+          disabled={
+            !dateRange?.from ||
+            !dateRange?.to ||
+            state.loadingAvailability ||
+            (!!state.availability &&
+              Math.min(...state.availability.map((d) => d.remainingSlots)) <
+                guests.adults + guests.children)
+          }
         >
-          Reserve dates
+          {state.loadingAvailability ? "Checking..." : "Reserve dates"}
         </button>
 
         <p className="text-center text-sm text-gray-500 mt-3">

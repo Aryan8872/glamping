@@ -43,7 +43,6 @@ export const useSearchStore = create<SearchState>((set, get) => ({
     // Set all filters at once
     setFilters: (filters) => {
         set({ filters: { ...filters, page: 1 }, error: null });
-        get().search();
     },
 
     // Update a single filter
@@ -52,7 +51,6 @@ export const useSearchStore = create<SearchState>((set, get) => ({
             filters: { ...state.filters, [key]: value, page: 1 },
             error: null,
         }));
-        get().search();
     },
 
     // Perform search

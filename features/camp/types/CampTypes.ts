@@ -24,6 +24,7 @@ export interface Camp {
     originalPrice?: number;
     discountPercentage?: number;
     discountName?: string;
+    isFullyBooked?: boolean;
 }
 
 export interface CampResponse {

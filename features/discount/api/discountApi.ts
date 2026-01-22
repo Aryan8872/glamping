@@ -20,7 +20,11 @@ export const fetchActiveDiscount = async (): Promise<DiscountOffer | null> => {
                 : data.amount, // Returning amount even if fixed, UI might need adjustment if using % symbol blindly
             expiryDate: data.endsAt || data.startsAt, // Fallback if endsAt is null? Featured should have expiry usually.
             code: "DISCOUNT", // Dummy code since backend doesn't have it
-            link: "#" // Dummy link
+            link: "#", // Dummy link
+            campId: data.camp?.id,
+            adventureId: data.adventure?.id,
+            campSlug: data.camp?.slug,
+            adventureSlug: data.adventure?.slug
         };
     } catch (error) {
         console.error("Error fetching discount:", error);

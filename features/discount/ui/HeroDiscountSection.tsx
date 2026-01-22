@@ -1,6 +1,7 @@
 "use client";
 import { useDiscount } from "../service/discountService";
 import DiscountTimer from "./DiscountTimer";
+import Link from "next/link";
 
 export default function HeroDiscountSection() {
   const { discount, loading } = useDiscount();
@@ -67,12 +68,28 @@ export default function HeroDiscountSection() {
       <DiscountTimer expiryDate={discount.expiryDate} />
 
       <div className="flex flex-col gap-3 w-full mt-4">
-        <button
-          onClick={() => (window.location.href = "/adventures")}
-          className="w-full bg-primary-green hover:bg-primary-green/80 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-colors text-center text-sm sm:text-base"
-        >
-          Explore {discount.title} adventures
-        </button>
+        {discount.campId ? (
+          <Link
+            href={`/camp/${discount.campId}`}
+            className="w-full bg-primary-green hover:bg-green-700 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-colors text-center text-sm sm:text-base shadow-lg"
+          >
+            Explore this Camp
+          </Link>
+        ) : discount.adventureSlug ? (
+          <Link
+            href={`/adventures/${discount.adventureSlug}`}
+            className="w-full bg-primary-green hover:bg-green-700 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-colors text-center text-sm sm:text-base shadow-lg"
+          >
+            Explore this Adventure
+          </Link>
+        ) : (
+          <Link
+            href="/search"
+            className="w-full bg-primary-green hover:bg-green-700 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-colors text-center text-sm sm:text-base shadow-lg"
+          >
+            Explore All Escapes
+          </Link>
+        )}
       </div>
     </div>
   );

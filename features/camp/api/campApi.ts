@@ -53,3 +53,14 @@ export async function apiGetFacilities() {
     // Backend returns { message: string, data: Facility[] }
     return (response as any).data as Facility[];
 }
+
+export async function apiGetCampAvailability(campId: number, checkIn: string, checkOut: string) {
+    const res = await HttpGet(`booking/availability/${campId}?checkIn=${checkIn}&checkOut=${checkOut}`);
+    return res.data as {
+        date: string;
+        bookedGuests: number;
+        remainingSlots: number;
+        totalSlots: number;
+        isFullyBooked: boolean;
+    }[];
+}

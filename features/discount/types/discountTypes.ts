@@ -8,6 +8,10 @@ export interface DiscountOffer {
     expiryDate: string; // ISO string
     code?: string;
     link?: string;
+    campId?: string | number;
+    adventureId?: string | number;
+    campSlug?: string;
+    adventureSlug?: string;
 }
 
 export interface TimeLeft {

@@ -25,66 +25,84 @@ export default function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [prevScrollPos]);
 
-  // Simple search page navbar with FilterBar
+  // Search page navbar with original branding and new search layout
   if (isSearchPage) {
     return (
-      <header className="sticky top-0 z-[9999] w-full bg-white border-b py-2 border-gray-200 text-black">
-        <div className="mx-auto flex items-center justify-between py-1 px-4 lg:px-8">
-          <div className="flex items-center gap-7">
+      <header className="sticky top-0 z-[9999] w-full bg-white border-b border-gray-200 shadow-md">
+        <div className="flex items-center justify-between py-1 px-3 sm:px-9 xl:px-10">
+          {/* Logo and Search Bar Section */}
+          <div className="flex items-center gap-6 flex-1">
             <Link
               href="/"
-              className="flex items-center gap-2 font-extrabold tracking-[.15em] text-black"
+              className="flex items-center gap-2 font-extrabold tracking-[.15em] shrink-0"
             >
-              <Image src="/logo.svg" alt="Logo" width={80} height={80} />
-              <p className="flex flex-col gap-2">
+              <Image src="/logo.svg" alt="Logo" width={70} height={70} />
+              {/* <p className="flex flex-col gap-2">
                 <span className="hidden sm:block text-primary-green">
                   CAMPORA
                 </span>
                 <span className="hidden sm:block text-primary-green text-sm">
                   Himalayan escapes
                 </span>
-              </p>
+              </p> */}
             </Link>
-            <div className="xl:block hidden">
+
+            {/* Search Bar aligned to left section */}
+            <div className="hidden lg:block">
               <FilterBar />
             </div>
           </div>
 
-          <nav className="hidden gap-7 text-sm font-semibold text-black 2xl:flex">
-            {[
-              { href: "/", label: "Home" },
-              { href: "/about", label: "About Us" },
-              { href: "/gallery", label: "Gallery" },
-              { href: "/contact", label: "Contacts" },
-            ].map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="hover:underline underline-offset-4"
-              >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
+          {/* Right Nav Section */}
+          <div className="flex items-center gap-7 ml-auto">
+            {/* Nav links hidden below 1450px */}
+            <nav className="hidden min-[1450px]:flex items-center gap-7 text-sm font-semibold text-black">
+              {[
+                { href: "/", label: "Home" },
+                { href: "/about", label: "About Us" },
+                { href: "/gallery", label: "Gallery" },
+                { href: "/contact", label: "Contacts" },
+              ].map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className="hover:underline text-primary-green underline-offset-4"
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
 
-          <MdMenu
-            className="block 2xl:hidden text-2xl cursor-pointer"
-            onClick={() => {
-              setShowMenu(!showMenu);
-            }}
-          />
+            {/* Hamburger for search page below 1450px */}
+            <MdMenu
+              size={28}
+              className="min-[1450px]:hidden text-gray-700 cursor-pointer hover:text-primary-green transition-colors"
+              onClick={() => setShowMenu(true)}
+            />
+          </div>
         </div>
 
+        {/* Mobile FilterBar Section */}
+        <div className="lg:hidden px-4 pb-3 mt-5 lg:mt-0">
+          <FilterBar />
+        </div>
+
+        {/* Sidebar Menu (Slide-in) */}
         <div
-          className={`${showMenu ? "translate-y-0" : "-translate-y-full"} ${
-            isSearchPage ? " 2xl:hidden " : " md:hidden"
-          } flex items-center justify-center fixed z-[9999] inset-0 w-full h-svh bg-white transition-transform duration-300 ease-in-out  `}
+          className={`${
+            showMenu ? "translate-x-0" : "translate-x-full"
+          } fixed top-0 right-0 w-80 h-full bg-white shadow-2xl z-[10000] p-8 transition-transform duration-300 ease-in-out border-l border-gray-100 flex flex-col`}
         >
-          <IoClose
-            className="absolute top-5 right-7 text-3xl cursor-pointer"
-            onClick={() => setShowMenu(!showMenu)}
-          />
-          <nav className="flex flex-col gap-7 text-sm font-semibold">
+          <div className="flex justify-between items-center mb-10">
+            <h2 className="text-xl font-bold text-primary-green">Menu</h2>
+            <IoClose
+              size={28}
+              className="cursor-pointer text-gray-500 hover:text-red-500 transition-colors"
+              onClick={() => setShowMenu(false)}
+            />
+          </div>
+
+          <nav className="flex flex-col gap-6">
             {[
               { href: "/", label: "Home" },
               { href: "/about", label: "About Us" },
@@ -94,14 +112,28 @@ export default function NavBar() {
               <Link
                 key={l.href}
                 href={l.href}
-                onClick={() => setShowMenu(!showMenu)}
-                className="hover:underline text-2xl text-primary-green underline-offset-4"
+                onClick={() => setShowMenu(false)}
+                className="text-lg font-semibold text-gray-700 hover:text-primary-green hover:pl-2 transition-all"
               >
                 {l.label}
               </Link>
             ))}
           </nav>
+
+          <div className="mt-auto pt-8 border-t border-gray-50">
+            <button className="w-full py-3 bg-primary-green text-white rounded-lg font-bold hover:bg-green-700 transition-colors">
+              Sign In
+            </button>
+          </div>
         </div>
+
+        {/* Overlay */}
+        {showMenu && (
+          <div
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[9999]"
+            onClick={() => setShowMenu(false)}
+          />
+        )}
       </header>
     );
   }

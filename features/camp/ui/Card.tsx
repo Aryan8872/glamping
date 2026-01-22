@@ -19,15 +19,14 @@ const Card = ({ camp }: { camp: Camp }) => {
           id={camp.id}
           images={camp.images.map((image) => buildImageUrl(image))}
           sliderClassname=""
-          imageClassname="aspect-[2/2.5] rounded-2xl"
+          imageClassname={`aspect-[2/2.5] rounded-2xl ${camp.isFullyBooked ? "grayscale-[0.5]" : ""}`}
         />
-        {/* {camp.discountPercentage &&
-          camp.discountPercentage > 0 &&
-          camp.discountPercentage !== 0 && (
-            <div className="absolute top-3 left-3 bg-white text-black text-xs font-bold px-3 py-1.5 rounded-md shadow-md z-10">
-              {camp.discountPercentage}% {camp.discountName || "Off"}
-            </div>
-          )} */}
+        {camp.isFullyBooked && (
+          <div className="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-md z-10 flex items-center gap-1">
+            <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
+            FULLY BOOKED
+          </div>
+        )}
       </div>
       <Link href={`/camp/${camp.id}`} className="w-full flex flex-col gap-2">
         <div className="flex flex-row justify-between">
@@ -68,10 +67,10 @@ const Card = ({ camp }: { camp: Camp }) => {
             {Number(camp.maxAdult) + Number(camp.maxChildren)} Guests
           </span>
         </div>
-        <div className="flex flex-row items-center gap-1 text-[12px]">
+        {/* <div className="flex flex-row items-center gap-1 text-[12px]">
           <FaStar className="text-yellow-500 text-[13px]" />
           <span>4.5 (200 reviews)</span>
-        </div>
+        </div> */}
       </Link>
     </div>
   );

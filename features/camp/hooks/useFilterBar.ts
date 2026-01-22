@@ -6,7 +6,7 @@ import { useSearchStore } from "@/lib/store/searchStore";
 export type FilterModalType = "date" | "guest" | "price" | "all" | null;
 
 export function useFilterBar() {
-    const { filters, updateFilter, setFilters } = useSearchStore();
+    const { filters, setFilters, search } = useSearchStore();
 
     // Inputs
     const [location, setLocation] = useState(filters.q ?? "");
@@ -81,41 +81,31 @@ export function useFilterBar() {
         });
     }, [filters.adults, filters.children, filters.pets]);
 
-    /* Debounce search (Write back to store) */
-    useEffect(() => {
-        const t = setTimeout(() => {
-            if (location !== (filters.q ?? "")) {
-                updateFilter("q", location);
-            }
-        }, 300);
-        return () => clearTimeout(t);
-    }, [location, filters.q, updateFilter]);
-
-    /* Update price filter (Write back to store) */
-    useEffect(() => {
-        const t = setTimeout(() => {
-            const currentMin = filters.minPrice ?? 0;
-            const currentMax = filters.maxPrice ?? 5000;
-            if (priceRange[0] !== currentMin || priceRange[1] !== currentMax) {
-                setFilters({
-                    ...filters,
-                    minPrice: priceRange[0],
-                    maxPrice: priceRange[1],
-                });
-            }
-        }, 250);
-        return () => clearTimeout(t);
-    }, [priceRange, filters, setFilters]);
+    // Explicit Search Trigger
+    const handleSearch = () => {
+        setFilters({
+            ...filters,
+            q: location,
+            checkIn: checkIn || undefined,
+            checkOut: checkOut || undefined,
+            adults: guests.adults,
+            children: guests.children,
+            pets: guests.pets,
+            minPrice: priceRange[0],
+            maxPrice: priceRange[1],
+            page: 1,
+        });
+        // We need to wait for the state to update or just trigger with the values directly
+        // Since setFilters now only updates state, we manually call search() from the store
+        // But to be safe and avoid stale state in the store's search implementation, 
+        // we can pass the latest filters if needed, but the store's search() uses get().filters.
+        search();
+    };
 
     /* Events */
     const handleDateChange = (ci: string, co: string) => {
         setCheckIn(ci);
         setCheckOut(co);
-        setFilters({
-            ...filters,
-            checkIn: ci || undefined,
-            checkOut: co || undefined,
-        });
     };
 
     const handleGuestChange = (
@@ -127,12 +117,6 @@ export function useFilterBar() {
             [type]: Math.max(0, guests[type] + delta),
         };
         setGuests(updated);
-        setFilters({
-            ...filters,
-            adults: updated.adults,
-            children: updated.children,
-            pets: updated.pets,
-        });
     };
 
     return {
@@ -149,5 +133,6 @@ export function useFilterBar() {
         loadingFacilities,
         handleDateChange,
         handleGuestChange,
+        handleSearch
     };
 }

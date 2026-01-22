@@ -12,6 +12,14 @@ export interface BookingState {
     openModal: ModalType;
     dateRange: DateRange | undefined;
     guests: GuestCounts;
+    availability: {
+        date: string;
+        bookedGuests: number;
+        remainingSlots: number;
+        totalSlots: number;
+        isFullyBooked: boolean;
+    }[] | null;
+    loadingAvailability: boolean;
 }
 
 export type BookingAction =
@@ -21,7 +29,9 @@ export type BookingAction =
         type: "UPDATE_GUESTS";
         payload: { type: keyof GuestCounts; delta: number };
     }
-    | { type: "RESET_DATES" };
+    | { type: "RESET_DATES" }
+    | { type: "SET_AVAILABILITY"; payload: BookingState["availability"] }
+    | { type: "SET_LOADING_AVAILABILITY"; payload: boolean };
 
 export const initialBookingState: BookingState = {
     openModal: null,
@@ -31,6 +41,8 @@ export const initialBookingState: BookingState = {
         children: 0,
         pets: 0,
     },
+    availability: null,
+    loadingAvailability: false,
 };
 
 export function bookingReducer(
@@ -54,7 +66,11 @@ export function bookingReducer(
                 },
             };
         case "RESET_DATES":
-            return { ...state, dateRange: undefined };
+            return { ...state, dateRange: undefined, availability: null };
+        case "SET_AVAILABILITY":
+            return { ...state, availability: action.payload };
+        case "SET_LOADING_AVAILABILITY":
+            return { ...state, loadingAvailability: action.payload };
         default:
             return state;
     }
